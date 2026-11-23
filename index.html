@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alkuaineiden ihmeellinen maailma</title>
+<title>Tähtipölyseikkailu – alkuaineet ja avaruus</title>
 <style>
   :root{
     --bg:#0f1733; --bg2:#18224a; --card:#ffffff; --ink:#1d2340; --soft:#5b6390;
@@ -164,10 +164,40 @@
   .tl p{margin:6px 0 0}
   .tl .em{font-size:26px;margin-right:6px}
   .tl.new{background:#fff6d6}
+
+  /* ---------- Kansikuva ---------- */
+  header.hero{padding:0 0 24px}
+  .cover{position:relative;max-width:1200px;margin:16px auto 0;border-radius:0 0 32px 32px;overflow:hidden;min-height:460px;display:flex;align-items:center}
+  @media (min-width:1232px){.cover{border-radius:32px}}
+  .cover-art{position:absolute;inset:0;width:100%;height:100%}
+  .cover-text{position:relative;z-index:1;text-align:left;padding:40px clamp(20px,5vw,60px);max-width:780px}
+  .cover-kicker{display:inline-block;background:#ffcc4d;color:var(--ink);font-weight:900;padding:6px 14px;border-radius:999px;font-size:16px}
+  .cover h1{font-size:clamp(34px,5.4vw,66px);margin:12px 0 8px;line-height:1.02;
+     background:linear-gradient(90deg,#fff,#ffe08a 45%,#ff9f9f 75%,#c3b5ff);-webkit-background-clip:text;background-clip:text;color:transparent;
+     filter:drop-shadow(0 4px 12px #0008)}
+  .cover p{max-width:560px;font-size:clamp(18px,2.4vw,23px);color:#eef1ff;margin:0 0 20px;text-shadow:0 2px 8px #000a;text-align:left}
+  .cover-cta{display:flex;gap:12px;flex-wrap:wrap}
+  .cover-cta .btn{text-decoration:none;display:inline-block}
+  @media (max-width:720px){
+    .cover{min-height:560px;align-items:flex-end}
+    .cover-text{background:linear-gradient(transparent,#0b1030ee 30%);padding-top:80px}
+  }
+  .cv-rocket{animation:cvFly 5s ease-in-out infinite}
+  @keyframes cvFly{50%{transform:translate(14px,-16px)}}
+  .cv-flame{animation:cvFlick .15s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:top}
+  @keyframes cvFlick{to{transform:scaleY(.75)}}
+  .cv-spin{animation:cvSpin 4s linear infinite;transform-box:fill-box;transform-origin:center}
+  @keyframes cvSpin{to{transform:rotate(360deg)}}
+  .cv-orbit{animation:cvSpin 14s linear infinite;transform-box:fill-box;transform-origin:center}
+  .cv-comet{animation:cvComet 9s linear infinite;opacity:0}
+  @keyframes cvComet{0%{transform:translate(0,0);opacity:0}5%{opacity:1}20%{transform:translate(420px,-90px);opacity:0}100%{opacity:0}}
+  .tw{animation:tw 3s ease-in-out infinite}
+  @keyframes tw{50%{opacity:.15}}
   footer{color:#c9cff3;text-align:center;padding:30px 16px 50px;font-size:15px}
 
   @media (prefers-reduced-motion:reduce){
     .orbit{animation:none}
+    .cv-rocket,.cv-flame,.cv-spin,.cv-orbit,.cv-comet,.tw{animation:none}
     .planet .bob{animation:none}
     .fusion .nuc{transition:none}
     .modal{animation:none}
@@ -178,9 +208,70 @@
 <div class="stars" aria-hidden="true"></div>
 
 <header class="hero">
-  <div id="heroAtom" class="atom" style="max-width:170px;margin:0 auto" aria-hidden="true"></div>
-  <h1>Alkuaineiden ihmeellinen maailma</h1>
-  <p>Kaikki ympärilläsi on tehty pienen pienistä palasista, joita kutsutaan atomeiksi. Tule katsomaan, mistä maailma on tehty!</p>
+  <div class="cover">
+    <svg class="cover-art" viewBox="0 0 1200 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <radialGradient id="cvNeb1" cx="20%" cy="30%" r="50%"><stop offset="0" stop-color="#7b4dff" stop-opacity=".55"/><stop offset="1" stop-color="#7b4dff" stop-opacity="0"/></radialGradient>
+        <radialGradient id="cvNeb2" cx="80%" cy="70%" r="45%"><stop offset="0" stop-color="#ff5d8f" stop-opacity=".4"/><stop offset="1" stop-color="#ff5d8f" stop-opacity="0"/></radialGradient>
+        <radialGradient id="cvPlanet" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#ffd38a"/><stop offset=".6" stop-color="#ff8a4c"/><stop offset="1" stop-color="#8f2d5c"/></radialGradient>
+        <radialGradient id="cvEarth" cx="35%" cy="35%" r="70%"><stop offset="0" stop-color="#9fd0ff"/><stop offset=".6" stop-color="#3b82f6"/><stop offset="1" stop-color="#1d3f99"/></radialGradient>
+        <radialGradient id="cvMoon" cx="35%" cy="35%" r="70%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#9a9fb5"/></radialGradient>
+        <linearGradient id="cvFlame" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6b0"/><stop offset=".5" stop-color="#ffb400"/><stop offset="1" stop-color="#ff4d4d" stop-opacity="0"/></linearGradient>
+        <linearGradient id="cvTrail" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity=".5"/></linearGradient>
+      </defs>
+      <rect width="1200" height="560" fill="#0b1030"/>
+      <rect width="1200" height="560" fill="url(#cvNeb1)"/>
+      <rect width="1200" height="560" fill="url(#cvNeb2)"/>
+      <g id="cvStars"></g>
+      <!-- iso rengasplaneetta -->
+      <g transform="translate(1010 150)">
+        <ellipse rx="190" ry="40" fill="none" stroke="#ffe3a8" stroke-width="16" opacity=".55" transform="rotate(-18)"/>
+        <circle r="105" fill="url(#cvPlanet)"/>
+        <path d="M-100 -20 Q 0 -45 100 -10" stroke="#ffffff" stroke-opacity=".18" stroke-width="12" fill="none"/>
+        <path d="M-98 30 Q 0 5 98 40" stroke="#5b1a3f" stroke-opacity=".25" stroke-width="14" fill="none"/>
+        <path d="M-190 0 A 190 40 0 0 0 190 0" transform="rotate(-18)" fill="none" stroke="#ffe3a8" stroke-width="16" opacity=".8"/>
+      </g>
+      <!-- Maa ja Kuu -->
+      <g transform="translate(90 515)">
+        <circle r="70" fill="url(#cvEarth)"/>
+        <ellipse cx="-20" cy="-12" rx="26" ry="36" fill="#3fbf6a"/>
+        <ellipse cx="30" cy="25" rx="20" ry="16" fill="#3fbf6a"/>
+        <ellipse cx="0" cy="-62" rx="34" ry="9" fill="#fff"/>
+        <g class="cv-orbit"><circle r="131" fill="none"/><circle cx="115" cy="0" r="16" fill="url(#cvMoon)"/></g>
+      </g>
+      <!-- atomi -->
+      <g transform="translate(660 125)" class="cv-atom">
+        <circle r="12" fill="#ff5d5d"/><circle cx="8" cy="-6" r="8" fill="#9aa6c9"/><circle cx="-7" cy="6" r="8" fill="#ff7a7a"/>
+        <g class="cv-spin"><ellipse rx="70" ry="22" fill="none" stroke="#3ec7ff" stroke-width="3"/><circle cx="70" cy="0" r="7" fill="#3ec7ff"/></g>
+        <g class="cv-spin" style="animation-duration:5s"><ellipse rx="70" ry="22" fill="none" stroke="#3ec7ff" stroke-width="3" transform="rotate(60)"/><circle cx="35" cy="19" r="7" fill="#3ec7ff" transform="rotate(60)"/></g>
+        <g class="cv-spin" style="animation-duration:7s"><ellipse rx="70" ry="22" fill="none" stroke="#3ec7ff" stroke-width="3" transform="rotate(-60)"/><circle cx="-70" cy="0" r="7" fill="#3ec7ff" transform="rotate(-60)"/></g>
+      </g>
+      <!-- raketti -->
+      <path d="M300 520 C 520 470, 640 380, 780 300" stroke="url(#cvTrail)" stroke-width="10" stroke-linecap="round" fill="none" stroke-dasharray="2 18"/>
+      <g class="cv-rocket">
+        <g transform="translate(800 290) rotate(52)">
+          <path class="cv-flame" d="M-14 58 Q 0 120 14 58 Z" fill="url(#cvFlame)"/>
+          <path d="M-22 30 L-40 62 L-14 52 Z" fill="#ff5d5d"/><path d="M22 30 L40 62 L14 52 Z" fill="#ff5d5d"/>
+          <path d="M0 -70 C 30 -40, 26 30, 18 58 L -18 58 C -26 30, -30 -40, 0 -70 Z" fill="#f4f6ff"/>
+          <path d="M0 -70 C 14 -56, 20 -42, 22 -30 L -22 -30 C -20 -42, -14 -56, 0 -70 Z" fill="#ff5d5d"/>
+          <circle cy="-6" r="13" fill="#3ec7ff" stroke="#1d3f99" stroke-width="5"/>
+          <circle cx="-4" cy="-10" r="4" fill="#fff" opacity=".8"/>
+          <rect x="-6" y="58" width="12" height="8" rx="2" fill="#5b6390"/>
+        </g>
+      </g>
+      <!-- komeetta -->
+      <g class="cv-comet"><path d="M560 60 L 700 30" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".7"/><circle cx="700" cy="30" r="5" fill="#fff"/></g>
+    </svg>
+    <div class="cover-text">
+      <div class="cover-kicker">🚀 Seikkailu alkaa tästä</div>
+      <h1>Tähtipölyseikkailu</h1>
+      <p>Tiesitkö, että sinä olet tehty tähtipölystä? Lähde matkalle pienen pienistä atomeista aina kaukaisille planeetoille asti!</p>
+      <div class="cover-cta">
+        <a class="btn" href="#mika">Aloita seikkailu 🚀</a>
+        <a class="btn ghost" href="#aurinkokunta">Lennä planeetoille 🪐</a>
+      </div>
+    </div>
+  </div>
   <nav class="top" aria-label="Sivun osat">
     <a href="#mika">🤔 Mikä on alkuaine?</a>
     <a href="#taulukko">🧪 Alkuainetaulukko</a>
@@ -301,7 +392,7 @@
 </section>
 
 <footer>
-  Alkuaineiden ihmeellinen maailma · Tehty uteliaille tutkijoille 🔭<br>
+  Tähtipölyseikkailu · Tehty uteliaille tutkijoille 🔭<br>
   Atomien kuvat ovat yksinkertaistettuja: oikeasti elektronit eivät kierrä ratoja kuin planeetat, vaan ne ovat ytimen ympärillä kuin sumupilvi.
 </footer>
 
@@ -337,6 +428,7 @@
         <div class="fact"><div class="lbl">Mistä se tuli?</div><div class="val" id="mOrigin"></div></div>
       </div>
     </div>
+
     <div class="modal-nav">
       <button class="btn ghost" id="mPrev">⬅ Edellinen</button>
       <button class="btn ghost" id="mNext">Seuraava ➜</button>
@@ -689,6 +781,7 @@ document.getElementById('modeGroup').onclick = ()=>setMode('group');
 document.getElementById('modeOrigin').onclick = ()=>setMode('origin');
 document.getElementById('search').addEventListener('input', paint);
 
+
 /* ================= MODAL ================= */
 const bg = document.getElementById('modalBg');
 let current = 1, lastFocus = null;
@@ -809,7 +902,12 @@ document.getElementById('bRange').oninput = ev=>{ bz=+ev.target.value; drawBuild
 document.getElementById('bOpen').onclick = ()=>openModal(bz);
 
 /* ================= KÄYNNISTYS ================= */
-document.getElementById('heroAtom').innerHTML = atomSVG(2,4,{id:'h',dark:true,label:'Heliumatomi'});
+(function(){ let s=''; for(let i=0;i<120;i++){ const x=(i*137.5)%1200, y=(i*59.3)%560, r=(i%5===0)?2:(i%2?1:1.4);
+   s+=`<circle class="${i%3===0?'tw':''}" style="animation-delay:${(i%7)*.4}s" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="#fff" opacity="${.4+(i%4)*.15}"/>`; }
+   document.getElementById('cvStars').innerHTML=s;
+   const art=document.querySelector('.cover-art'), mq=matchMedia('(max-width:720px)');
+   const fit=()=>art.setAttribute('preserveAspectRatio', mq.matches?'xMaxYMin slice':'xMidYMid slice'); fit();
+   mq.addEventListener && mq.addEventListener('change', fit); })();
 document.getElementById('introAtom').innerHTML = atomSVG(6,12,{id:'i',label:'Hiiliatomi'});
 buildTable(); drawFusion(); drawBuilder();
 

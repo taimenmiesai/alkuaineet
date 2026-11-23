@@ -1,8 +1,10 @@
-# Alkuaineiden ihmeellinen maailma 🧪
+# Tähtipölyseikkailu 🚀🧪
 
-Interaktiivinen sivu, joka opettaa alkuaineita lapselle (noin 9-vuotiaalle) selkeällä suomen kielellä.
+Interaktiivinen sivu, joka opettaa lapselle (noin 9-vuotiaalle) alkuaineita ja aurinkokuntaa selkeällä suomen kielellä.
 
 ## Mitä sivulla on
+
+- **Kansikuva** kutsuu seikkailuun: raketti, planeetat ja atomi.
 
 - **Mikä on alkuaine?** Atomi, protonit, neutronit ja elektronit kuvan kera. Pääasia: protonien määrä ratkaisee, mikä alkuaine on.
 - **Alkuainetaulukko.** Kaikki 118 alkuainetta. Kun ruutua klikkaa, aukeaa kortti, jossa on
