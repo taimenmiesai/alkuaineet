@@ -123,10 +123,52 @@
   .pbtns{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}
   .pbtns .btn{font-size:24px;width:58px;height:58px;padding:0}
   input[type=range]{width:100%;accent-color:#ff5d5d}
+
+  /* ---------- Aurinkokunta ---------- */
+  .sky{background:#0d1230;border-radius:20px;overflow-x:auto;padding:6px 0;margin-top:8px}
+  .sky svg{display:block;min-width:1000px;width:100%;height:auto}
+  .planet{cursor:pointer;outline:none}
+  .planet .body{transition:transform .2s;transform-box:fill-box;transform-origin:center}
+  .planet:hover .body,.planet:focus-visible .body{transform:scale(1.15)}
+  .planet:focus-visible text{text-decoration:underline}
+  .planet .bob{animation:bob 4s ease-in-out infinite;transform-box:fill-box}
+  @keyframes bob{50%{transform:translateY(-6px)}}
+  .p-top{display:flex;gap:18px;align-items:center;padding:22px 26px;border-radius:26px 26px 0 0;color:#fff}
+  .p-top h2{margin:0;font-size:clamp(28px,5vw,42px);text-shadow:0 2px 6px #0006}
+  .p-top .cat{font-weight:700;font-size:18px;opacity:.95}
+  .p-pic{width:110px;height:110px;flex:none}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+  .stat{background:#f4f6ff;border-radius:14px;padding:10px 14px}
+  .stat .lbl{font-size:13px;font-weight:800;color:var(--soft);text-transform:uppercase;letter-spacing:.4px}
+  .stat .val{font-size:18px;font-weight:700}
+  .p-body{padding:22px 26px 26px;display:grid;gap:16px}
+  .elchips{display:flex;flex-wrap:wrap;gap:8px}
+  .elchip{border:none;border-radius:12px;padding:8px 12px;font-weight:800;font-size:17px;display:inline-flex;gap:8px;align-items:center}
+  .elchip b{font-size:22px}
+  .elchip:hover{outline:3px solid var(--ink)}
+  .missions{display:grid;gap:10px}
+  .mission{border-radius:16px;padding:12px 16px;background:#f4f6ff;border-left:8px solid #c4cae8}
+  .mission.now{border-left-color:#2fbf71;background:#eafaf1}
+  .mission.future{border-left-color:#3b82f6;background:#eaf2ff}
+  .mission.past{border-left-color:#a3a9c2}
+  .mission .who{font-size:14px;font-weight:800;color:var(--soft)}
+  .mission h4{margin:2px 0 4px;font-size:19px}
+  .badge{display:inline-block;font-size:12px;font-weight:900;padding:2px 9px;border-radius:999px;margin-left:6px;vertical-align:2px;color:#fff}
+  .badge.now{background:#2fbf71}.badge.future{background:#3b82f6}.badge.past{background:#8a90a8}
+  .timeline{position:relative;margin:20px 0 0;padding-left:34px}
+  .timeline:before{content:"";position:absolute;left:14px;top:6px;bottom:6px;width:4px;border-radius:4px;background:linear-gradient(#ffcc4d,#ff8a65,#c39bff,#3ec7ff)}
+  .tl{position:relative;margin-bottom:16px;background:#f4f6ff;border-radius:16px;padding:12px 16px}
+  .tl:before{content:"";position:absolute;left:-27px;top:18px;width:14px;height:14px;border-radius:50%;background:#fff;border:4px solid var(--ink)}
+  .tl .yr{font-weight:900;font-size:22px;color:#b36b00;margin-right:8px}
+  .tl h3{display:inline;font-size:20px}
+  .tl p{margin:6px 0 0}
+  .tl .em{font-size:26px;margin-right:6px}
+  .tl.new{background:#fff6d6}
   footer{color:#c9cff3;text-align:center;padding:30px 16px 50px;font-size:15px}
 
   @media (prefers-reduced-motion:reduce){
     .orbit{animation:none}
+    .planet .bob{animation:none}
     .fusion .nuc{transition:none}
     .modal{animation:none}
   }
@@ -144,6 +186,8 @@
     <a href="#taulukko">🧪 Alkuainetaulukko</a>
     <a href="#synty">⭐ Miten alkuaineet syntyivät?</a>
     <a href="#rakenna">🛠️ Rakenna atomi</a>
+    <a href="#aurinkokunta">🪐 Aurinkokunta</a>
+    <a href="#historia">🚀 Avaruushistoria</a>
   </nav>
 </header>
 
@@ -235,6 +279,27 @@
   </div>
 </section>
 
+
+<!-- ===== AURINKOKUNTA ===== -->
+<section id="aurinkokunta">
+  <div class="panel">
+    <h2>🪐 Aurinkokunta</h2>
+    <p class="lead big">Maa on yksi kahdeksasta planeetasta, jotka kiertävät Aurinkoa. Klikkaa planeettaa, niin näet, millainen se on, mistä se on tehty ja kuka sitä tutkii juuri nyt.</p>
+    <div class="sky"><svg id="skySvg" viewBox="0 0 1400 280" role="group" aria-label="Aurinkokunnan planeetat"></svg></div>
+    <p class="hint">Huom! Oikeasti planeetat ovat paljon kauempana toisistaan, ja Aurinko on valtavan paljon isompi. Kaikki ei vain mahtuisi ruudulle. Puhelimella kuvaa voi vierittää sivulle.</p>
+    <div class="callout big">🔗 <b>Planeetat on tehty alkuaineista!</b> Kun Aurinko oli nuori, sen ympärillä pyöri pölyä ja kaasua, joka oli syntynyt vanhoissa tähdissä. Siitä pölystä ja kaasusta muodostuivat planeetat. Lähellä Aurinkoa planeetoista tuli kivisiä (rautaa, piitä, happea). Kauempana niistä tuli jättimäisiä kaasupalloja (vetyä ja heliumia).</div>
+  </div>
+</section>
+
+<!-- ===== HISTORIA ===== -->
+<section id="historia">
+  <div class="panel">
+    <h2>🚀 Avaruushistoria</h2>
+    <p class="lead big">Ihmiset ovat haaveilleet avaruudesta aina. Tässä ovat tärkeimmät hetket, kun haaveista tuli totta.</p>
+    <div class="timeline" id="timeline"></div>
+  </div>
+</section>
+
 <footer>
   Alkuaineiden ihmeellinen maailma · Tehty uteliaille tutkijoille 🔭<br>
   Atomien kuvat ovat yksinkertaistettuja: oikeasti elektronit eivät kierrä ratoja kuin planeetat, vaan ne ovat ytimen ympärillä kuin sumupilvi.
@@ -275,6 +340,36 @@
     <div class="modal-nav">
       <button class="btn ghost" id="mPrev">⬅ Edellinen</button>
       <button class="btn ghost" id="mNext">Seuraava ➜</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== PLANEETTA-MODAL ===== -->
+<div class="modal-bg" id="pBg">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pName">
+    <button class="close" id="pClose" aria-label="Sulje">×</button>
+    <div class="p-top" id="pTop">
+      <svg class="p-pic" id="pPic" viewBox="0 0 120 120" aria-hidden="true"></svg>
+      <div><h2 id="pName"></h2><div class="cat" id="pType"></div></div>
+    </div>
+    <div class="p-body">
+      <div class="stats" id="pStats"></div>
+      <div class="fact fun"><div class="lbl">Hauska tieto</div><div class="val" id="pFact"></div></div>
+      <div>
+        <h3>🧪 Mistä se on tehty?</h3>
+        <p class="hint" style="margin:0 0 8px">Klikkaa alkuainetta, niin näet sen atomin.</p>
+        <div class="elchips" id="pEls"></div>
+      </div>
+      <div>
+        <h3>🛰️ Tutkimusmatkat</h3>
+        <p class="hint" style="margin:0 0 8px"><span class="badge now">NYT</span> menossa juuri nyt · <span class="badge future">TULOSSA</span> suunnitteilla · <span class="badge past">HISTORIAA</span> jo tehty</p>
+        <div class="missions" id="pMissions"></div>
+      </div>
+    </div>
+    <div class="modal-nav">
+      <button class="btn ghost" id="pPrev">⬅ Edellinen</button>
+      <button class="btn ghost" id="pNext">Seuraava ➜</button>
     </div>
   </div>
 </div>
@@ -717,6 +812,206 @@ document.getElementById('bOpen').onclick = ()=>openModal(bz);
 document.getElementById('heroAtom').innerHTML = atomSVG(2,4,{id:'h',dark:true,label:'Heliumatomi'});
 document.getElementById('introAtom').innerHTML = atomSVG(6,12,{id:'i',label:'Hiiliatomi'});
 buildTable(); drawFusion(); drawBuilder();
+
+/* ================= AURINKOKUNTA ================= */
+const BODIES = [
+ {id:'aurinko', n:'Aurinko', e:'☀️', type:'Tähti – aurinkokunnan keskus', c:['#fff6b0','#ffc400','#ff7a00'], r:0,
+  stats:[['Koko','109 kertaa Maata leveämpi'],['Lämpötila','Pinnalla noin 5 500 °C'],['Ikä','Noin 4,6 miljardia vuotta'],['Valo Maahan','Noin 8 minuutissa']],
+  el:[1,2,8,6,26], fact:'Aurinkoon mahtuisi yli miljoona Maata! Jos ajaisit autolla Aurinkoon 100 kilometrin tuntinopeudella, matka kestäisi yli 170 vuotta.',
+  m:[
+   ['now','🇺🇸 NASA','Parker Solar Probe','2018–','Luotain on lentänyt lähemmäs Aurinkoa kuin mikään muu ihmisen tekemä laite. Paksu lämpökilpi suojaa sitä kuumuudelta.'],
+   ['now','🇪🇺 ESA','Solar Orbiter','2020–','Ottaa ensimmäisiä kuvia Auringon navoista, eli Auringon "ylä- ja alapäästä".']]},
+ {id:'merkurius', n:'Merkurius', e:'⚫', type:'Kiviplaneetta · 1. planeetta', c:['#d8d8d8','#9c9c9c','#5e5e5e'], r:9,
+  stats:[['Koko','Vähän isompi kuin Kuu'],['Etäisyys Auringosta','58 miljoonaa km'],['Vuosi','88 päivää'],['Kuita','0'],['Lämpötila','Päivällä +430 °C, yöllä −180 °C']],
+  el:[26,14,8,12], fact:'Pienin planeetta. Päivällä siellä on kuumempaa kuin uunissa ja yöllä kylmempää kuin pakastimessa.',
+  m:[
+   ['now','🇪🇺🇯🇵 ESA ja JAXA','BepiColombo','2018–','Lähti matkaan 2018 ja pääsi Merkuriuksen kiertoradalle marraskuussa 2026. Siinä on kaksi luotainta, jotka eroavat toisistaan joulukuussa. Varsinainen tutkimus alkaa 2027.'],
+   ['past','🇺🇸 NASA','MESSENGER','2011–2015','Ensimmäinen luotain, joka kiersi Merkuriusta. Se kuvasi koko planeetan.']]},
+ {id:'venus', n:'Venus', e:'🟡', type:'Kiviplaneetta · 2. planeetta', c:['#fff0c2','#e8bd6a','#b9822f'], r:15,
+  stats:[['Koko','Melkein yhtä iso kuin Maa'],['Etäisyys Auringosta','108 miljoonaa km'],['Vuosi','225 päivää'],['Kuita','0'],['Lämpötila','Noin 465 °C']],
+  el:[6,8,16,14], fact:'Kuumin planeetta, vaikka Merkurius on lähempänä Aurinkoa. Paksu kaasukehä pitää lämmön sisällä kuin peitto. Venus myös pyörii väärään suuntaan!',
+  m:[
+   ['future','🇺🇸 NASA','DAVINCI','noin 2030','Pudottaa mittalaitteen Venuksen paksun kaasukehän läpi ja tutkii, mistä ilma on tehty.'],
+   ['future','🇪🇺 ESA','EnVision','2030-luku','Kartoittaa Venuksen pintaa tutkalla, joka näkee pilvien läpi.'],
+   ['future','🇺🇸 NASA','VERITAS','2030-luku','Tekee tarkan kartan Venuksen vuorista ja tulivuorista.'],
+   ['past','Neuvostoliitto','Venera 7','1970','Ensimmäinen luotain, joka laskeutui toiselle planeetalle ja lähetti sieltä tietoa Maahan.']]},
+ {id:'maa', n:'Maa', e:'🌍', type:'Kiviplaneetta · 3. planeetta · kotimme', c:['#9fd0ff','#3b82f6','#1d3f99'], r:16,
+  stats:[['Koko','Halkaisija 12 742 km'],['Etäisyys Auringosta','150 miljoonaa km'],['Vuosi','365 päivää'],['Kuita','1'],['Lämpötila','Keskimäärin +15 °C']],
+  el:[26,8,14,12,1,7], fact:'Ainoa planeetta, jolla tiedetään olevan elämää. Pinnasta noin kaksi kolmasosaa on vettä.',
+  m:[
+   ['now','🌐 Monta maata yhdessä','Kansainvälinen avaruusasema ISS','2000–','Avaruusasemalla on asunut ihmisiä koko ajan marraskuusta 2000 lähtien. Se kiertää Maan noin puolessatoista tunnissa.'],
+   ['now','🇨🇳 Kiina','Tiangong-avaruusasema','2021–','Kiinan oma avaruusasema, jossa astronautit asuvat vuorotellen.'],
+   ['now','🇫🇮 ICEYE','Tutkasatelliitit','2018–','Suomalainen yritys, jonka pienet satelliitit näkevät Maan pinnan pilvien läpi ja jopa pimeällä.'],
+   ['past','🇫🇮 Aalto-yliopisto','Aalto-1','2017','Suomen ensimmäinen oma satelliitti. Sen rakensivat yliopiston opiskelijat.']]},
+ {id:'kuu', n:'Kuu', e:'🌕', type:'Maan kuu', c:['#ffffff','#d0d0d0','#8f8f8f'], r:6,
+  stats:[['Koko','Noin neljäsosa Maasta'],['Etäisyys Maasta','384 000 km'],['Kierros Maan ympäri','27 päivää'],['Lämpötila','Päivällä +120 °C, yöllä −170 °C']],
+  el:[8,14,26,20,13], fact:'Kuussa on käynyt 12 ihmistä. Autolla Kuuhun ajaminen kestäisi yli viisi kuukautta. Kuu kääntää aina saman puolen Maahan päin.',
+  m:[
+   ['past','🇺🇸🇨🇦 NASA ja Kanada','Artemis II','huhtikuu 2026','Neljä astronauttia lensi Kuun ympäri ja takaisin. He kävivät kauempana Maasta kuin yksikään ihminen ennen heitä: 406 771 km!'],
+   ['future','🇺🇸 NASA, SpaceX ja Blue Origin','Artemis III','2027','Astronautit harjoittelevat Maan kiertoradalla telakoitumista uusiin kuulaskeutujiin: SpaceX:n Starshipiin ja Blue Originin Blue Mooniin.'],
+   ['future','🇺🇸 NASA','Artemis IV','2028 (suunnitelma)','Tavoite on laskeutua ihmisiä Kuun etelänavan lähelle ensimmäistä kertaa sitten vuoden 1972.'],
+   ['future','🇨🇳 Kiina','Chang\'e 7','2027','Etsii jäätynyttä vettä Kuun etelänavalta. Mukana on hyppivä robotti! Laukaisu siirtyi vuodelta 2026 vuoteen 2027.'],
+   ['future','🇨🇳 Kiina','Ihmiset Kuuhun','ennen 2030','Kiina aikoo laskeutua omia astronautteja Kuuhun ennen vuotta 2030.'],
+   ['past','🇨🇳 Kiina','Chang\'e 6','2024','Toi Maahan ensimmäiset kivinäytteet Kuun kaukaiselta puolelta.'],
+   ['past','🇮🇳 Intia','Chandrayaan-3','2023','Laskeutui ensimmäisenä lähelle Kuun etelänapaa.'],
+   ['past','🇺🇸 NASA','Apollo 11','1969','Neil Armstrong ja Buzz Aldrin olivat ensimmäiset ihmiset Kuussa.']]},
+ {id:'mars', n:'Mars', e:'🔴', type:'Kiviplaneetta · 4. planeetta', c:['#ffb08a','#e0623a','#8f2d14'], r:11,
+  stats:[['Koko','Noin puolet Maasta'],['Etäisyys Auringosta','228 miljoonaa km'],['Vuosi','687 päivää'],['Päivä','24 h 37 min'],['Kuita','2: Phobos ja Deimos'],['Lämpötila','Keskimäärin −60 °C']],
+  el:[26,8,14,12], fact:'Mars on punainen, koska sen maaperässä on ruostetta eli rautaa ja happea yhdessä. Marsissa on aurinkokunnan korkein tulivuori, Olympus Mons. Se on lähes kolme kertaa niin korkea kuin Mount Everest.',
+  m:[
+   ['now','🇺🇸 NASA','Perseverance','2021–','Mönkijä tutkii muinaista järvenpohjaa ja etsii merkkejä muinaisesta elämästä. Mukana oli Ingenuity, ensimmäinen toisella planeetalla lentänyt helikopteri.'],
+   ['now','🇺🇸 NASA','Curiosity','2012–','On ajellut Marsissa yli kymmenen vuotta ja kiipeää ison vuoren rinnettä.'],
+   ['now','🇯🇵 JAXA','MMX','2026–','Lähti matkaan lokakuussa 2026. Se lentää Marsin Phobos-kuulle, ottaa sieltä pölyä ja tuo sen Maahan vuonna 2031. Mukana on pieni Idefix-mönkijä.'],
+   ['future','🇨🇳 Kiina','Tianwen-3','2028','Tavoite on hakea Marsin kiviä Maahan. Lähtö olisi 2028 ja paluu 2031.'],
+   ['future','🚀 SpaceX','Starship Marsiin','aikaisintaan 2028','SpaceX haluaa lennättää jättiraketin Marsiin ja myöhemmin ihmisiä sinne. Raketti ei ehtinyt vuoden 2026 lähtöikkunaan.']]},
+ {id:'jupiter', n:'Jupiter', e:'🟠', type:'Kaasujättiläinen · 5. planeetta', c:['#f6dcb5','#d9a46c','#9a6234'], r:48,
+  stats:[['Koko','11 kertaa Maata leveämpi'],['Etäisyys Auringosta','778 miljoonaa km'],['Vuosi','12 vuotta'],['Päivä','Vain 10 tuntia'],['Kuita','Yli 90'],['Lämpötila','Noin −110 °C']],
+  el:[1,2], fact:'Isoin planeetta. Sen Suuri punainen pilkku on myrsky, joka on isompi kuin koko Maa ja on raivonnut satoja vuosia.',
+  m:[
+   ['now','🇺🇸 NASA','Europa Clipper','2024–','Lähti 2024 ja saapuu Jupiterille 2030. Se tutkii Europa-kuuta, jonka jääkuoren alla on valtava meri.'],
+   ['now','🇪🇺 ESA','JUICE','2023–','Lähti 2023 ja saapuu heinäkuussa 2031. Lopuksi se jää kiertämään Ganymedesta, joka on aurinkokunnan suurin kuu.'],
+   ['past','🇺🇸 NASA','Juno','2016–2025','Kiersi Jupiteria ja kuvasi sen myrskyjä aivan läheltä.']]},
+ {id:'saturnus', n:'Saturnus', e:'🪐', type:'Kaasujättiläinen · 6. planeetta', c:['#fff1c9','#e3c27c','#a8823c'], r:40, ring:true,
+  stats:[['Koko','9 kertaa Maata leveämpi'],['Etäisyys Auringosta','1,4 miljardia km'],['Vuosi','29 vuotta'],['Kuita','Yli 270'],['Lämpötila','Noin −140 °C']],
+  el:[1,2,8], fact:'Saturnuksen renkaat ovat jäätä ja kiveä. Saturnus on niin kevyt, että se kelluisi, jos löytyisi tarpeeksi iso amme vettä!',
+  m:[
+   ['future','🇺🇸 NASA','Dragonfly','lähtö 2028','Lennokki, joka lentelee Saturnuksen Titan-kuun hiekkadyyneillä. Lähtö on heinäkuussa 2028, ja perillä se on 2034.'],
+   ['past','🇺🇸🇪🇺 NASA ja ESA','Cassini–Huygens','2004–2017','Cassini kiersi Saturnusta 13 vuotta. Sen mukana ollut Huygens laskeutui Titanille vuonna 2005.']]},
+ {id:'uranus', n:'Uranus', e:'🔵', type:'Jääjättiläinen · 7. planeetta', c:['#e0fbff','#8fdde6','#3f9aa6'], r:26,
+  stats:[['Koko','4 kertaa Maata leveämpi'],['Etäisyys Auringosta','2,9 miljardia km'],['Vuosi','84 vuotta'],['Kuita','Lähes 30'],['Lämpötila','Noin −200 °C']],
+  el:[1,2,6], fact:'Uranus pyörii kyljellään kuin vierivä pallo. Sininen väri tulee metaanikaasusta.',
+  m:[
+   ['future','🇺🇸 NASA','Uusi Uranus-luotain','2030-luku','Tutkijat toivovat uutta luotainta Uranukselle. Se on yksi heidän tärkeimmistä toiveistaan.'],
+   ['past','🇺🇸 NASA','Voyager 2','1986','Ainoa luotain, joka on käynyt Uranuksella.']]},
+ {id:'neptunus', n:'Neptunus', e:'🔷', type:'Jääjättiläinen · 8. planeetta', c:['#b8c8ff','#4a6cf7','#1e2f8f'], r:25,
+  stats:[['Koko','4 kertaa Maata leveämpi'],['Etäisyys Auringosta','4,5 miljardia km'],['Vuosi','165 vuotta'],['Kuita','16'],['Lämpötila','Noin −200 °C']],
+  el:[1,2,6], fact:'Aurinkokunnan tuulisin paikka: tuulet puhaltavat yli 2 000 kilometriä tunnissa. Se on nopeampaa kuin ääni!',
+  m:[
+   ['past','🇺🇸 NASA','Voyager 2','1989','Ainoa luotain, joka on käynyt Neptunuksella. Matka sinne kesti 12 vuotta.']]},
+ {id:'pluto', n:'Pluto', e:'🤍', type:'Kääpiöplaneetta', c:['#fff1e3','#d6b79a','#8c6b52'], r:6,
+  stats:[['Koko','Pienempi kuin Kuu'],['Etäisyys Auringosta','5,9 miljardia km'],['Vuosi','248 vuotta'],['Kuita','5'],['Lämpötila','Noin −230 °C']],
+  el:[7,6,8,1], fact:'Pluto oli planeetta vuoteen 2006 asti. Nyt se on kääpiöplaneetta. Sen pinnalla on iso sydämen muotoinen jäätasanko.',
+  m:[
+   ['past','🇺🇸 NASA','New Horizons','2015','Lensi Pluton ohi ja otti siitä ensimmäiset tarkat kuvat. Matka kesti yhdeksän vuotta.']]}
+];
+const STATUS_TXT = {now:'NYT', future:'TULOSSA', past:'HISTORIAA'};
+
+function planetGfx(b, cx, cy, r, uid){
+  const g = `pg-${b.id}-${uid}`;
+  let s = `<defs><radialGradient id="${g}" cx="35%" cy="35%" r="70%"><stop offset="0" stop-color="${b.c[0]}"/><stop offset=".55" stop-color="${b.c[1]}"/><stop offset="1" stop-color="${b.c[2]}"/></radialGradient>
+           <clipPath id="cl-${g}"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath></defs>`;
+  if(b.ring) s += `<ellipse cx="${cx}" cy="${cy}" rx="${r*1.9}" ry="${r*.45}" fill="none" stroke="#e8d3a0" stroke-width="${r*.22}" opacity=".9"/>`;
+  s += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#${g})"/>`;
+  if(b.id==='jupiter'){
+    s += `<g clip-path="url(#cl-${g})" opacity=".55">${[-.55,-.25,.1,.4].map((k,i)=>`<rect x="${cx-r}" y="${cy+k*r}" width="${2*r}" height="${r*(i%2?.12:.18)}" fill="#8a4f24"/>`).join('')}</g>
+          <ellipse cx="${cx+r*.3}" cy="${cy+r*.28}" rx="${r*.2}" ry="${r*.11}" fill="#c0442a"/>`;
+  }
+  if(b.id==='maa'){
+    s += `<g clip-path="url(#cl-${g})" fill="#3fbf6a"><ellipse cx="${cx-r*.35}" cy="${cy-r*.2}" rx="${r*.35}" ry="${r*.5}"/><ellipse cx="${cx+r*.4}" cy="${cy+r*.3}" rx="${r*.3}" ry="${r*.25}"/><ellipse cx="${cx}" cy="${cy-r*.9}" rx="${r*.6}" ry="${r*.18}" fill="#fff"/></g>`;
+  }
+  if(b.id==='kuu' || b.id==='merkurius'){
+    s += `<g fill="#0002"><circle cx="${cx-r*.3}" cy="${cy-r*.2}" r="${r*.2}"/><circle cx="${cx+r*.3}" cy="${cy+r*.3}" r="${r*.15}"/><circle cx="${cx+r*.25}" cy="${cy-r*.4}" r="${r*.1}"/></g>`;
+  }
+  if(b.id==='mars') s += `<ellipse cx="${cx}" cy="${cy-r*.85}" rx="${r*.4}" ry="${r*.15}" fill="#fff" opacity=".85"/>`;
+  if(b.id==='pluto') s += `<path d="M${cx} ${cy+r*.45} C ${cx-r*.7} ${cy} ${cx-r*.3} ${cy-r*.45} ${cx} ${cy-r*.1} C ${cx+r*.3} ${cy-r*.45} ${cx+r*.7} ${cy} ${cx} ${cy+r*.45}Z" fill="#fff" opacity=".8"/>`;
+  if(b.ring) s += `<path d="M ${cx-r*1.9} ${cy} A ${r*1.9} ${r*.45} 0 0 0 ${cx+r*1.9} ${cy}" fill="none" stroke="#e8d3a0" stroke-width="${r*.22}" opacity=".9"/>`;
+  return s;
+}
+function drawSky(){
+  const svg = document.getElementById('skySvg');
+  let s = '';
+  for(let i=0;i<70;i++){ const x=(i*197)%1400, y=(i*83)%280; s += `<circle cx="${x}" cy="${y}" r="${(i%3)*.5+.6}" fill="#fff" opacity="${.3+(i%4)*.15}"/>`; }
+  const xs = {merkurius:225, venus:318, maa:405, kuu:442, mars:505, jupiter:610, saturnus:800, uranus:990, neptunus:1120, pluto:1225};
+  BODIES.forEach((b,i)=>{
+    let inner, lx, ly;
+    if(b.id==='aurinko'){
+      inner = planetGfx(b, -40, 140, 210, 'sky'); lx = 90; ly = 268;
+    } else {
+      const cx = xs[b.id], cy = b.id==='kuu' ? 112 : 140;
+      inner = `<g class="bob" style="animation-delay:${-i*0.7}s">${planetGfx(b, cx, cy, b.r, 'sky')}</g>`;
+      lx = cx; ly = b.id==='kuu' ? 92 : 140 + Math.max(b.r, 12) + (b.ring? 22 : 24);
+      if(b.id==='kuu') ly = 88;
+    }
+    const big = b.id==='kuu' || b.id==='pluto' ? 15 : 17;
+    s += `<g class="planet" tabindex="0" role="button" aria-label="${b.n}" data-i="${i}">
+            <g class="body">${inner}</g>
+            <text x="${lx}" y="${ly}" text-anchor="middle" fill="#fff" font-size="${big}" font-weight="800">${b.n}</text></g>`;
+  });
+  svg.innerHTML = s;
+  svg.querySelectorAll('.planet').forEach(g=>{
+    g.addEventListener('click', ()=>openPlanet(+g.dataset.i));
+    g.addEventListener('keydown', ev=>{ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); openPlanet(+g.dataset.i);} });
+  });
+}
+const pBg = document.getElementById('pBg');
+let pCur = 0, pLast = null;
+function openPlanet(i){
+  pCur = i; const b = BODIES[i];
+  document.getElementById('pTop').style.background = `linear-gradient(135deg, ${b.c[2]}, #1b1446)`;
+  document.getElementById('pPic').innerHTML = planetGfx(b, 60, 60, b.ring? 30 : 46, 'm');
+  document.getElementById('pName').textContent = `${b.e} ${b.n}`;
+  document.getElementById('pType').textContent = b.type;
+  document.getElementById('pStats').innerHTML = b.stats.map(([l,v])=>`<div class="stat"><div class="lbl">${l}</div><div class="val">${v}</div></div>`).join('');
+  document.getElementById('pFact').textContent = b.fact;
+  const els = document.getElementById('pEls'); els.innerHTML='';
+  b.el.forEach(z=>{
+    const e = ELEMENTS[z-1];
+    const btn = document.createElement('button'); btn.className='elchip';
+    btn.style.background = CATS[catOf(z)].color;
+    btn.innerHTML = `<b>${e.s}</b>${e.n}`;
+    btn.onclick = ()=>{ closePlanet(false); openModal(z); };
+    els.appendChild(btn);
+  });
+  document.getElementById('pMissions').innerHTML = b.m.map(([st,who,name,when,txt])=>
+    `<div class="mission ${st}"><div class="who">${who} · ${when}</div><h4>${name}<span class="badge ${st}">${STATUS_TXT[st]}</span></h4><div>${txt}</div></div>`).join('');
+  document.getElementById('pPrev').disabled = i===0;
+  document.getElementById('pNext').disabled = i===BODIES.length-1;
+  if(!pBg.classList.contains('open')){ pLast = document.activeElement; pBg.classList.add('open'); document.body.style.overflow='hidden'; }
+  pBg.querySelector('.modal').scrollTop = 0;
+  document.getElementById('pClose').focus();
+}
+function closePlanet(restore=true){ pBg.classList.remove('open'); document.body.style.overflow=''; if(restore && pLast) pLast.focus(); }
+document.getElementById('pClose').onclick = ()=>closePlanet();
+pBg.addEventListener('click', ev=>{ if(ev.target===pBg) closePlanet(); });
+document.getElementById('pPrev').onclick = ()=>pCur>0 && openPlanet(pCur-1);
+document.getElementById('pNext').onclick = ()=>pCur<BODIES.length-1 && openPlanet(pCur+1);
+document.addEventListener('keydown', ev=>{
+  if(!pBg.classList.contains('open')) return;
+  if(ev.key==='Escape') closePlanet();
+  if(ev.key==='ArrowRight' && pCur<BODIES.length-1) openPlanet(pCur+1);
+  if(ev.key==='ArrowLeft' && pCur>0) openPlanet(pCur-1);
+});
+
+/* ================= AVARUUSHISTORIA ================= */
+const HISTORY = [
+ ['1957','🛰️','Sputnik 1','Neuvostoliitto lähetti avaruuteen ensimmäisen satelliitin. Se oli rantapallon kokoinen ja piippasi radiossa: piip, piip, piip!'],
+ ['1957','🐕','Laika-koira','Laika oli ensimmäinen eläin, joka kiersi Maata avaruudessa. Silloin ei vielä osattu tuoda alusta takaisin, eikä Laika palannut kotiin. Laikaa muistetaan yhä avaruuden sankarina, ja hänen matkansa auttoi tekemään avaruuslennoista turvallisia ihmisille.'],
+ ['1960','🐶','Belka ja Strelka','Kaksi koiraa kävi avaruudessa ja palasi terveenä kotiin. Myöhemmin Strelka sai pentuja, ja yksi niistä annettiin lahjaksi Yhdysvaltain presidentin perheelle.'],
+ ['1961','👨‍🚀','Juri Gagarin','Ensimmäinen ihminen avaruudessa. Hän kiersi Maan kerran, ja lento kesti noin puolitoista tuntia.'],
+ ['1963','👩‍🚀','Valentina Tereškova','Ensimmäinen nainen avaruudessa. Hän kiersi Maata lähes kolme vuorokautta.'],
+ ['1965','🧑‍🚀','Ensimmäinen avaruuskävely','Aleksei Leonov astui ulos aluksesta ja leijui avaruudessa naru vyötäröllään.'],
+ ['1969','🌕','Ihminen Kuussa!','Apollo 11 laskeutui Kuuhun. Neil Armstrong astui ensimmäisenä Kuun pinnalle ja sanoi: "Pieni askel ihmiselle, suuri harppaus ihmiskunnalle."'],
+ ['1970','🛟','Apollo 13','Avaruusaluksessa tapahtui räjähdys matkalla Kuuhun. Astronautit ja maassa olleet insinöörit keksivät yhdessä keinot, ja kaikki pääsivät turvallisesti kotiin.'],
+ ['1972','👣','Viimeiset kuukävelijät','Apollo 17 oli viimeinen kerta, kun ihmiset kävelivät Kuussa. Kaikkiaan Kuussa on käynyt 12 ihmistä.'],
+ ['1977','📀','Voyagerit lähtevät','Voyager 1 ja 2 lähtivät tutkimaan suuria planeettoja. Niissä on kultainen levy, jolla on Maan ääniä ja musiikkia. Voyager 1 on nyt kauimpana oleva ihmisen tekemä esine.'],
+ ['1990','🔭','Hubble-teleskooppi','Avaruuteen lähetettiin kaukoputki, joka on ottanut upeita kuvia tähdistä ja galakseista jo yli 30 vuotta.'],
+ ['1998','🏠','Avaruusasema ISS','Avaruusaseman rakentaminen alkoi. Vuodesta 2000 lähtien siellä on asunut ihmisiä koko ajan.'],
+ ['2003','🇨🇳','Kiinan ensimmäinen astronautti','Yang Liwei teki Kiinan ensimmäisen avaruuslennon.'],
+ ['2012','🤖','Curiosity Marsiin','Auton kokoinen mönkijä laskeutui Marsiin ja tutkii sitä yhä.'],
+ ['2015','🤍','Pluto läheltä','New Horizons -luotain näytti ensimmäistä kertaa, miltä Pluto näyttää. Siellä on sydämen muotoinen jäätasanko!'],
+ ['2017','🇫🇮','Suomen oma satelliitti','Aalto-1 oli ensimmäinen suomalainen satelliitti. Sen rakensivat opiskelijat.'],
+ ['2019','🌑','Kuun kaukainen puoli','Kiinan Chang\'e 4 laskeutui ensimmäisenä Kuun kaukaiselle puolelle, jota ei näe Maasta.'],
+ ['2021','🚁','Helikopteri Marsissa','Ingenuity-helikopteri lensi Marsissa. Se oli ensimmäinen lento toisella planeetalla.'],
+ ['2021','✨','James Webb -teleskooppi','Suurin avaruusteleskooppi lähti matkaan. Se näkee galakseja, jotka syntyivät pian alkuräjähdyksen jälkeen.'],
+ ['2023','🇮🇳','Intia Kuun etelänavalle','Chandrayaan-3 laskeutui ensimmäisenä lähelle Kuun etelänapaa.'],
+ ['2026','🌕','Artemis II','Huhtikuussa 2026 neljä astronauttia lensi Kuun ympäri. Se oli ensimmäinen kerta yli 50 vuoteen, kun ihmisiä lensi Kuuhun. He kävivät kauempana Maasta kuin kukaan ennen heitä.', true],
+ ['2026','🛰️','Uusia matkoja','Marraskuussa 2026 BepiColombo pääsi Merkuriuksen kiertoradalle. Japanin MMX lähti hakemaan pölyä Marsin kuusta.', true],
+ ['Tulevaisuus','🚀','Mitä seuraavaksi?','Ihmisiä on tarkoitus viedä taas Kuuhun ja joskus Marsiin. Ehkä sinä olet yksi tulevaisuuden avaruustutkijoista!', true]
+];
+document.getElementById('timeline').innerHTML = HISTORY.map(([y,em,t,txt,isNew])=>
+  `<div class="tl${isNew?' new':''}"><span class="yr">${y}</span><span class="em">${em}</span><h3>${t}</h3><p>${txt}</p></div>`).join('');
+drawSky();
+
 </script>
 </body>
 </html>

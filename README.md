@@ -14,6 +14,8 @@ Interaktiivinen sivu, joka opettaa alkuaineita lapselle (noin 9-vuotiaalle) selk
   - Värityksen voi vaihtaa: *Ryhmät* tai *Mistä alkuaine tuli?*. Mukana on myös haku.
 - **Miten alkuaineet syntyivät?** Kuuden kohdan tarina: alkuräjähdys → tähdet → supernovat → neutronitähdet → Maa → laboratoriot. Lisäksi fuusiokokeilu (vety → helium → hiili → happi → rikki).
 - **Rakenna oma atomi.** Lisää tai poista protoneja ja katso, miten alkuaine muuttuu.
+- **Aurinkokunta.** Klikattavat planeetat, Kuu ja Pluto. Kortissa ovat koko, etäisyys, vuoden pituus, kuut, lämpötila, hauska tieto, ainesosat (linkit alkuainetaulukkoon) ja avaruusjärjestöjen sekä -yhtiöiden tutkimusmatkat (NASA, ESA, JAXA, Kiina, Intia, SpaceX, Blue Origin, ICEYE). Matkoille on merkitty, ovatko ne käynnissä, tulossa vai historiaa. Tilanne on päivitetty marraskuussa 2026.
+- **Avaruushistoria.** Aikajana Sputnikista ja Laika-koirasta kuulentoihin ja Artemis II:een.
 
 ## Käyttö
 
