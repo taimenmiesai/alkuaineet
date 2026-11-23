@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alkuaineiden ihmeellinen maailma</title>
+<style>
+  :root{
+    --bg:#0f1733; --bg2:#18224a; --card:#ffffff; --ink:#1d2340; --soft:#5b6390;
+    --accent:#ffcc4d; --proton:#ff5d5d; --neutron:#9aa6c9; --electron:#3ec7ff;
+    --alkali:#ff9f9f; --alkaline:#ffc98a; --transition:#ffe08a; --post:#b9e6a6;
+    --metalloid:#8fe0c9; --nonmetal:#9fd3ff; --halogen:#c3b5ff; --noble:#f3b5f0;
+    --lanth:#ffd1a8; --actin:#ffb3c7; --unknown:#d8dbe6;
+    --o-bb:#ffb347; --o-cosmic:#7fe0ff; --o-small:#ffe36e; --o-big:#ff8a65;
+    --o-neutron:#c39bff; --o-decay:#9be59b; --o-human:#cfd6e6;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:ui-rounded,"Segoe UI Rounded","Nunito","Trebuchet MS",system-ui,sans-serif;
+       color:var(--ink);background:var(--bg);line-height:1.5;font-size:18px}
+  a{color:inherit}
+  .stars{position:fixed;inset:0;z-index:-1;background:
+     radial-gradient(1px 1px at 10% 20%,#fff8 50%,transparent 51%),
+     radial-gradient(1.5px 1.5px at 70% 10%,#fffa 50%,transparent 51%),
+     radial-gradient(1px 1px at 40% 60%,#fff6 50%,transparent 51%),
+     radial-gradient(2px 2px at 85% 75%,#fff9 50%,transparent 51%),
+     radial-gradient(1px 1px at 25% 85%,#fff7 50%,transparent 51%),
+     radial-gradient(1.5px 1.5px at 55% 35%,#fff8 50%,transparent 51%),
+     linear-gradient(180deg,#0f1733,#1b1446 60%,#0f1733)}
+  header.hero{color:#fff;text-align:center;padding:40px 16px 24px}
+  .hero h1{font-size:clamp(30px,6vw,56px);margin:8px 0 4px;letter-spacing:.5px}
+  .hero p{font-size:clamp(17px,2.4vw,22px);max-width:720px;margin:0 auto;color:#dfe4ff}
+  nav.top{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+  nav.top a{background:#ffffff1a;border:2px solid #ffffff33;color:#fff;text-decoration:none;
+       padding:10px 18px;border-radius:999px;font-weight:700}
+  nav.top a:hover{background:var(--accent);color:var(--ink)}
+  section{max-width:1200px;margin:0 auto;padding:24px 16px}
+  .panel{background:var(--card);border-radius:24px;padding:28px;box-shadow:0 10px 30px #0006}
+  h2{font-size:clamp(26px,4vw,38px);margin:0 0 12px}
+  h3{font-size:22px;margin:0 0 6px}
+  .big{font-size:20px}
+  .lead{color:var(--soft);margin-top:0}
+  .row{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+  .row > *{flex:1 1 300px}
+  .callout{background:#fff6d6;border:3px dashed #f0b400;border-radius:18px;padding:16px 20px}
+  .callout b{color:#b36b00}
+  button{font:inherit;cursor:pointer}
+  .btn{background:var(--accent);border:none;border-radius:999px;padding:12px 22px;font-weight:800;
+       color:var(--ink);box-shadow:0 4px 0 #c99a1f}
+  .btn:active{transform:translateY(2px);box-shadow:0 2px 0 #c99a1f}
+  .btn.ghost{background:#eef1ff;box-shadow:0 4px 0 #c4cae8}
+
+  /* ---------- Atom ---------- */
+  .atom svg{width:100%;max-width:340px;height:auto;display:block;margin:0 auto}
+  .orbit{transform-box:view-box;transform-origin:150px 150px;animation:spin linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .legend-dots{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-size:16px;margin-top:6px}
+  .dot{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:-2px;margin-right:6px}
+
+  /* ---------- Table ---------- */
+  .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:8px 0 14px}
+  .toggle{display:inline-flex;background:#eef1ff;border-radius:999px;padding:4px}
+  .toggle button{border:none;background:transparent;padding:8px 16px;border-radius:999px;font-weight:700;color:var(--soft)}
+  .toggle button[aria-pressed="true"]{background:var(--ink);color:#fff}
+  .search{border:2px solid #d6dbf0;border-radius:999px;padding:9px 16px;font:inherit;font-size:17px;min-width:220px}
+  .table-wrap{overflow-x:auto;padding-bottom:8px}
+  .ptable{display:grid;grid-template-columns:repeat(18,minmax(52px,1fr));gap:4px;min-width:980px}
+  .el{position:relative;aspect-ratio:1/1.1;border:none;border-radius:10px;padding:4px 3px;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      color:var(--ink);transition:transform .15s, box-shadow .15s, opacity .2s;line-height:1.05}
+  .el:hover,.el:focus-visible{transform:scale(1.18);z-index:2;box-shadow:0 6px 16px #0004;outline:3px solid var(--ink)}
+  .el .n{position:absolute;top:3px;left:5px;font-size:11px;font-weight:700;opacity:.75}
+  .el .s{font-size:21px;font-weight:900}
+  .el .nm{font-size:9.5px;font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .el.dim{opacity:.18}
+  .el.placeholder{background:#eef1ff;color:var(--soft);font-size:11px;font-weight:700;cursor:default}
+  .el.placeholder:hover{transform:none;box-shadow:none;outline:none}
+  .gap{grid-column:1/-1;height:12px}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:15px;font-weight:700;border:none;color:var(--ink)}
+  .chip[aria-pressed="true"]{outline:3px solid var(--ink)}
+  .hint{color:var(--soft);font-size:16px}
+
+  /* ---------- Modal ---------- */
+  .modal-bg{position:fixed;inset:0;background:#0a0f26cc;display:none;align-items:center;justify-content:center;padding:14px;z-index:50}
+  .modal-bg.open{display:flex}
+  .modal{background:#fff;border-radius:26px;max-width:900px;width:100%;max-height:94vh;overflow:auto;position:relative;
+         animation:pop .25s ease-out}
+  @keyframes pop{from{transform:scale(.9);opacity:0}}
+  .modal-top{padding:22px 26px;border-radius:26px 26px 0 0;display:flex;gap:18px;align-items:center}
+  .tile{background:#fff;border-radius:16px;width:110px;height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 0 #0002;flex:none}
+  .tile .n{font-weight:800;font-size:16px}
+  .tile .s{font-size:46px;font-weight:900;line-height:1}
+  .modal-top h2{margin:0;font-size:clamp(28px,5vw,42px)}
+  .modal-top .cat{font-weight:700;font-size:18px}
+  .modal-body{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:22px 26px 26px}
+  @media (max-width:720px){.modal-body{grid-template-columns:1fr}}
+  .facts{display:grid;gap:12px}
+  .fact{background:#f4f6ff;border-radius:16px;padding:12px 16px}
+  .fact .lbl{font-size:14px;font-weight:800;color:var(--soft);text-transform:uppercase;letter-spacing:.5px}
+  .fact .val{font-size:19px}
+  .fun{background:#fff6d6}
+  .close{position:absolute;top:12px;right:12px;width:46px;height:46px;border-radius:50%;border:none;background:#fff;font-size:26px;font-weight:900;box-shadow:0 2px 8px #0003}
+  .modal-nav{display:flex;justify-content:space-between;padding:0 26px 22px;gap:10px}
+  .counts{display:flex;gap:10px;flex-wrap:wrap}
+  .count{flex:1 1 90px;text-align:center;border-radius:14px;padding:8px;color:#fff;font-weight:800}
+  .count b{display:block;font-size:28px}
+
+  /* ---------- Story ---------- */
+  .story{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:18px}
+  .step{border-radius:20px;padding:20px;color:var(--ink);position:relative}
+  .step .em{font-size:48px;line-height:1}
+  .step .no{position:absolute;top:14px;right:16px;font-weight:900;font-size:28px;opacity:.35}
+  .fusion{background:#1b1446;border-radius:20px;color:#fff;padding:20px;margin-top:22px}
+  .fusion svg{width:100%;max-width:520px;height:auto;display:block;margin:0 auto}
+  .fusion .nuc{transition:transform 1.3s cubic-bezier(.6,0,.3,1),opacity .4s}
+  .fusion p{font-size:19px;text-align:center;min-height:3em;margin:10px auto;max-width:620px}
+  .fusion .btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+  /* ---------- Builder ---------- */
+  .builder-name{font-size:clamp(30px,6vw,48px);font-weight:900;margin:0}
+  .pbtns{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}
+  .pbtns .btn{font-size:24px;width:58px;height:58px;padding:0}
+  input[type=range]{width:100%;accent-color:#ff5d5d}
+  footer{color:#c9cff3;text-align:center;padding:30px 16px 50px;font-size:15px}
+
+  @media (prefers-reduced-motion:reduce){
+    .orbit{animation:none}
+    .fusion .nuc{transition:none}
+    .modal{animation:none}
+  }
+</style>
+</head>
+<body>
+<div class="stars" aria-hidden="true"></div>
+
+<header class="hero">
+  <div id="heroAtom" class="atom" style="max-width:170px;margin:0 auto" aria-hidden="true"></div>
+  <h1>Alkuaineiden ihmeellinen maailma</h1>
+  <p>Kaikki ympärilläsi on tehty pienen pienistä palasista, joita kutsutaan atomeiksi. Tule katsomaan, mistä maailma on tehty!</p>
+  <nav class="top" aria-label="Sivun osat">
+    <a href="#mika">🤔 Mikä on alkuaine?</a>
+    <a href="#taulukko">🧪 Alkuainetaulukko</a>
+    <a href="#synty">⭐ Miten alkuaineet syntyivät?</a>
+    <a href="#rakenna">🛠️ Rakenna atomi</a>
+  </nav>
+</header>
+
+<!-- ===== MIKÄ ON ALKUAINE ===== -->
+<section id="mika">
+  <div class="panel">
+    <h2>🤔 Mikä on alkuaine?</h2>
+    <div class="row">
+      <div>
+        <p class="big">Kaikki on tehty <b>atomeista</b>: sinä, koirasi, vesi, ilma ja jopa tähdet. Atomit ovat niin pieniä, ettei niitä näe edes suurennuslasilla.</p>
+        <p class="big"><b>Alkuaine</b> on aine, jossa kaikki atomit ovat samaa lajia. Kulta on alkuaine. Happi on alkuaine. Alkuaineita tunnetaan <b>118</b>.</p>
+        <p class="big">Atomin keskellä on pieni <b>ydin</b>. Siinä on kahdenlaisia palloja: <span style="color:var(--proton);font-weight:800">protoneja</span> ja <span style="color:#6b78a3;font-weight:800">neutroneja</span>. Ytimen ympärillä kiitävät pikkuruiset <span style="color:#0f9fd6;font-weight:800">elektronit</span>.</p>
+        <div class="callout big">🔑 <b>Salaisuus:</b> protonien määrä ratkaisee, mikä alkuaine on kyseessä! <br>1 protoni = vety. 2 protonia = helium. 6 protonia = hiili. 79 protonia = kulta.</div>
+      </div>
+      <div>
+        <div id="introAtom" class="atom"></div>
+        <div class="legend-dots">
+          <span><span class="dot" style="background:var(--proton)"></span>protoni</span>
+          <span><span class="dot" style="background:var(--neutron)"></span>neutroni</span>
+          <span><span class="dot" style="background:var(--electron)"></span>elektroni</span>
+        </div>
+        <p class="hint" style="text-align:center">Tämä on hiiliatomi: 6 protonia, 6 neutronia ja 6 elektronia.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TAULUKKO ===== -->
+<section id="taulukko">
+  <div class="panel">
+    <h2>🧪 Alkuainetaulukko</h2>
+    <p class="lead big">Klikkaa mitä tahansa ruutua, niin näet sen alkuaineen atomin ja hauskan tiedon siitä. Numero ruudun kulmassa kertoo, montako protonia atomissa on.</p>
+    <div class="controls">
+      <span style="font-weight:800">Värit:</span>
+      <div class="toggle" role="group" aria-label="Taulukon värit">
+        <button id="modeGroup" aria-pressed="true">Ryhmät</button>
+        <button id="modeOrigin" aria-pressed="false">Mistä alkuaine tuli?</button>
+      </div>
+      <input id="search" class="search" type="search" placeholder="🔎 Etsi, esim. kulta" aria-label="Etsi alkuainetta">
+    </div>
+    <div class="table-wrap">
+      <div id="ptable" class="ptable"></div>
+    </div>
+    <div id="legend" class="legend"></div>
+    <p class="hint">Vinkki: klikkaa värinappia, niin näet vain sen ryhmän alkuaineet. Puhelimella taulukkoa voi vierittää sivulle.</p>
+  </div>
+</section>
+
+<!-- ===== SYNTY ===== -->
+<section id="synty">
+  <div class="panel">
+    <h2>⭐ Miten alkuaineet syntyivät?</h2>
+    <p class="lead big">Alkuaineet eivät ole aina olleet olemassa. Ne on tehty – ja niiden tehtaat ovat tähtiä!</p>
+    <div class="story" id="story"></div>
+
+    <div class="fusion" id="fusion">
+      <h3 style="text-align:center">🔥 Kokeile itse: tähden sisällä</h3>
+      <p style="font-size:17px;color:#cfd5ff;min-height:0">Tähden sisällä on miljoonia asteita kuumaa. Siellä ytimet törmäävät niin lujaa, että ne tarttuvat yhteen. Sitä kutsutaan <b>fuusioksi</b>.</p>
+      <svg id="fusionSvg" viewBox="0 0 520 260" role="img" aria-label="Fuusioanimaatio"></svg>
+      <p id="fusionText" aria-live="polite"></p>
+      <div class="btns">
+        <button class="btn" id="fuseBtn">Yhdistä ytimet! 💥</button>
+        <button class="btn ghost" id="nextFuse">Seuraava fuusio ➜</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RAKENNA ===== -->
+<section id="rakenna">
+  <div class="panel">
+    <h2>🛠️ Rakenna oma atomi</h2>
+    <p class="lead big">Lisää tai poista protoneja ja katso, miten alkuaine muuttuu. Juuri näin tähdet tekevät uusia alkuaineita!</p>
+    <div class="row">
+      <div>
+        <p class="hint" style="margin:0">Ytimessä on <b id="bP">1</b> protonia. Silloin atomi on:</p>
+        <p class="builder-name" id="bName">Vety</p>
+        <p class="big" id="bFact"></p>
+        <div class="pbtns">
+          <button class="btn" id="bMinus" aria-label="Poista protoni">−</button>
+          <button class="btn" id="bPlus" aria-label="Lisää protoni">+</button>
+          <button class="btn ghost" id="bOpen">Katso tarkemmin</button>
+        </div>
+        <label for="bRange" class="hint">Tai liu'uta: protonien määrä</label>
+        <input id="bRange" type="range" min="1" max="118" value="1">
+      </div>
+      <div><div id="builderAtom" class="atom"></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Alkuaineiden ihmeellinen maailma · Tehty uteliaille tutkijoille 🔭<br>
+  Atomien kuvat ovat yksinkertaistettuja: oikeasti elektronit eivät kierrä ratoja kuin planeetat, vaan ne ovat ytimen ympärillä kuin sumupilvi.
+</footer>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mName">
+    <button class="close" id="mClose" aria-label="Sulje">×</button>
+    <div class="modal-top" id="mTop">
+      <div class="tile"><span class="n" id="mNum"></span><span class="s" id="mSym"></span></div>
+      <div>
+        <h2 id="mName"></h2>
+        <div class="cat" id="mCat"></div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div>
+        <div id="mAtom" class="atom"></div>
+        <div class="legend-dots">
+          <span><span class="dot" style="background:var(--proton)"></span>protoni</span>
+          <span><span class="dot" style="background:var(--neutron)"></span>neutroni</span>
+          <span><span class="dot" style="background:var(--electron)"></span>elektroni</span>
+        </div>
+      </div>
+      <div class="facts">
+        <div class="counts">
+          <div class="count" style="background:var(--proton)"><b id="mP"></b>protonia</div>
+          <div class="count" style="background:#7d89b3"><b id="mN"></b>neutronia</div>
+          <div class="count" style="background:#1aa7dc"><b id="mE"></b>elektronia</div>
+        </div>
+        <div class="fact"><div class="lbl">Elektronikuoret</div><div class="val" id="mShells"></div></div>
+        <div class="fact fun"><div class="lbl">Hauska tieto</div><div class="val" id="mFact"></div></div>
+        <div class="fact"><div class="lbl">Huoneenlämmössä se on</div><div class="val" id="mState"></div></div>
+        <div class="fact"><div class="lbl">Mistä se tuli?</div><div class="val" id="mOrigin"></div></div>
+      </div>
+    </div>
+    <div class="modal-nav">
+      <button class="btn ghost" id="mPrev">⬅ Edellinen</button>
+      <button class="btn ghost" id="mNext">Seuraava ➜</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================= DATA =================
+   numero | merkki | nimi | massaluku | syntypaikka | emoji | hauska tieto */
+const RAW = `
+1|H|Vety|1|bb|💧|Kevein ja yleisin alkuaine koko maailmankaikkeudessa. Aurinko on suurimmaksi osaksi vetyä, ja vedessäkin on vetyä.
+2|He|Helium|4|bb|🎈|Heliumilla täytetty ilmapallo nousee ylös, koska helium on kevyempää kuin ilma.
+3|Li|Litium|7|cosmic|🔋|Kevein metalli. Litiumia on puhelimen ja sähköauton akussa.
+4|Be|Beryllium|9|cosmic|🔭|Kevyttä ja lujaa. Suuren avaruusteleskoopin peilit on tehty berylliumista.
+5|B|Boori|11|cosmic|🧪|Booria lisätään lasiin, joka kestää kuumaa, kuten uunivuokiin.
+6|C|Hiili|12|small|✏️|Kaikki elävät olennot on rakennettu hiilestä. Lyijykynän kärki ja timantti ovat molemmat hiiltä!
+7|N|Typpi|14|small|🌱|Ilmasta noin neljä viidesosaa on typpeä. Kasvit tarvitsevat typpeä kasvaakseen.
+8|O|Happi|16|big|🫁|Hengität happea joka hetki. Happea tarvitaan myös siihen, että tuli palaa.
+9|F|Fluori|19|big|🦷|Fluoria on hammastahnassa. Se tekee hampaista vahvempia.
+10|Ne|Neon|20|big|💡|Neonvalot hehkuvat kirkkaan punaoranssina, kun niiden läpi kulkee sähköä.
+11|Na|Natrium|23|big|🧂|Ruokasuola on natriumia ja klooria yhdessä. Puhdas natrium on niin pehmeää metallia, että sitä voi leikata veitsellä.
+12|Mg|Magnesium|24|big|🎆|Magnesium palaa häikäisevän valkoisella liekillä. Sitä käytetään ilotulitteissa.
+13|Al|Alumiini|27|big|🥤|Limsatölkit ja foliopaperi tehdään alumiinista. Se on kevyttä eikä ruostu.
+14|Si|Pii|28|big|💻|Tietokoneiden ja puhelimien sirut tehdään piistä. Hiekassa on paljon piitä.
+15|P|Fosfori|31|big|🔥|Tulitikkuaskin raapaisupinnassa on fosforia. Sitä on myös sinun luissasi.
+16|S|Rikki|32|big|🌋|Rikki on keltaista. Mädän kananmunan haju tulee rikistä.
+17|Cl|Kloori|35|big|🏊|Klooria laitetaan uima-altaan veteen, jotta bakteerit kuolevat.
+18|Ar|Argon|40|big|💡|Argon ei halua reagoida melkein minkään kanssa. Siksi sitä on laitettu hehkulamppuihin.
+19|K|Kalium|39|big|🍌|Banaanissa on paljon kaliumia. Kehosi tarvitsee sitä, jotta lihakset toimivat.
+20|Ca|Kalsium|40|big|🦴|Luut ja hampaat ovat vahvoja kalsiumin ansiosta. Sitä saa esimerkiksi maidosta.
+21|Sc|Skandium|45|big|🚲|Kevyt metalli, jota käytetään joissakin polkupyörän rungoissa.
+22|Ti|Titaani|48|big|✈️|Vahva ja kevyt metalli. Siitä tehdään lentokoneiden osia ja tekoniveliä.
+23|V|Vanadiini|51|big|🔧|Vanadiini tekee teräksestä tosi lujaa. Hyvissä työkaluissa on usein vanadiinia.
+24|Cr|Kromi|52|big|✨|Kromi saa metallipinnat kiiltämään kuin peili.
+25|Mn|Mangaani|55|big|🔋|Mangaania on paristoissa. Sitä tarvitaan myös teräksen tekemiseen.
+26|Fe|Rauta|56|big|🧲|Rauta on tärkein metalli rakentamisessa. Veressäsi on rautaa, joka kuljettaa happea.
+27|Co|Koboltti|59|big|🔵|Koboltista saadaan kaunista sinistä väriä lasiin ja posliiniin.
+28|Ni|Nikkeli|58|big|🪙|Monissa kolikoissa on nikkeliä. Suomessakin kaivetaan nikkeliä.
+29|Cu|Kupari|63|big|🔌|Sähköjohdot tehdään kuparista, koska sähkö kulkee siinä helposti.
+30|Zn|Sinkki|64|big|🛡️|Sinkki suojaa rautaa ruostumiselta. Kehosi tarvitsee sitä pieniä määriä.
+31|Ga|Gallium|69|small|🖐️|Gallium sulaa kädessä, koska se muuttuu nesteeksi jo vähän huoneenlämpöä lämpimämpänä.
+32|Ge|Germanium|74|small|📡|Germaniumia käytetään kameroissa, jotka näkevät lämmön pimeässä.
+33|As|Arseeni|75|big|☠️|Arseeni on myrkyllistä. Ennen vanhaan sitä käytettiin rotanmyrkkynä.
+34|Se|Seleeni|80|big|🥜|Pieni määrä seleeniä on terveellistä. Sitä on esimerkiksi parapähkinöissä.
+35|Br|Bromi|79|big|🟤|Yksi vain kahdesta alkuaineesta, jotka ovat huoneenlämmössä nestettä. Se on ruskeanpunaista.
+36|Kr|Krypton|84|big|🫥|Krypton tarkoittaa kreikaksi piilossa olevaa, koska sitä oli vaikea löytää ilmasta.
+37|Rb|Rubidium|85|small|⏰|Rubidiumia käytetään tosi tarkoissa kelloissa.
+38|Sr|Strontium|88|small|🎆|Strontium saa ilotulitteet hehkumaan punaisina.
+39|Y|Yttrium|89|small|🏘️|Nimi tulee Ruotsin Ytterbyn kylästä. Samasta kylästä on nimetty peräti neljä alkuainetta!
+40|Zr|Zirkonium|90|small|💍|Zirkoniumista tehdään kiiltäviä korukiviä, jotka näyttävät timanteilta.
+41|Nb|Niobium|93|small|🧲|Niobiumista tehdään tosi voimakkaita magneetteja suuriin tutkimuslaitteisiin.
+42|Mo|Molybdeeni|98|small|🔩|Molybdeeni tekee teräksestä kestävää kovassakin kuumuudessa.
+43|Tc|Teknetium|98|human|🏥|Ensimmäinen ihmisen tekemä alkuaine. Sairaalassa sen avulla kuvataan kehon sisäosia.
+44|Ru|Rutenium|102|neutron|🖊️|Rutenium on kovaa metallia, jota käytetään esimerkiksi kestävissä sähkökoskettimissa.
+45|Rh|Rodium|103|neutron|💎|Yksi maailman harvinaisimmista ja kalleimmista metalleista. Sillä päällystetään koruja kiiltäviksi.
+46|Pd|Palladium|106|small|🚗|Palladiumia on autojen pakoputkissa. Se puhdistaa pakokaasuja.
+47|Ag|Hopea|107|neutron|🥈|Hopeasta tehdään koruja, mitaleja ja lusikoita.
+48|Cd|Kadmium|114|small|🔋|Kadmiumia on ollut ladattavissa paristoissa. Se on myrkyllistä.
+49|In|Indium|115|small|📱|Kosketusnäytössä on ohut kerros indiumia. Ilman sitä näyttö ei tuntisi sormeasi.
+50|Sn|Tina|120|small|🥫|Tinasta tehdään tinasotilaita, ja sillä juotetaan sähkölaitteiden osia yhteen.
+51|Sb|Antimoni|121|neutron|🧯|Antimonia lisätään muoveihin, jotta ne eivät syty helposti palamaan.
+52|Te|Telluuri|130|neutron|☀️|Telluuria käytetään aurinkopaneeleissa, jotka tekevät sähköä auringonvalosta.
+53|I|Jodi|127|neutron|🩹|Jodia lisätään ruokasuolaan, koska keho tarvitsee sitä. Sillä voi myös puhdistaa haavoja.
+54|Xe|Ksenon|132|neutron|🚀|Joissakin avaruusaluksissa on moottori, joka työntää alusta eteenpäin ksenonkaasulla.
+55|Cs|Cesium|133|neutron|⏱️|Maailman tarkimmat kellot, atomikellot, toimivat cesiumin avulla.
+56|Ba|Barium|138|small|🩻|Kun lääkäri haluaa nähdä vatsan röntgenkuvassa, potilas juo bariumia sisältävää juomaa.
+57|La|Lantaani|139|small|🔭|Lantaania on kameroiden ja kiikarien hyvissä linsseissä.
+58|Ce|Cerium|140|small|🔥|Sytyttimen kipinä syntyy ceriumia sisältävästä piikivestä.
+59|Pr|Praseodyymi|141|small|🥽|Praseodyymistä tehdään hitsaajien suojalaseja ja vihreää lasia.
+60|Nd|Neodyymi|142|small|🧲|Maailman voimakkaimmat pienet magneetit ovat neodyymimagneetteja. Niitä on kuulokkeissa.
+61|Pm|Prometium|145|human|✨|Hyvin harvinainen ja radioaktiivinen. Melkein kaikki prometium on ihmisen tekemää.
+62|Sm|Samarium|152|neutron|🧲|Samariumista tehdään magneetteja, jotka kestävät kovaa kuumuutta.
+63|Eu|Europium|153|neutron|💶|Europium on nimetty Euroopan mukaan. Se hehkuu euroseteleissä UV-valossa, ja siitä tunnistetaan aidot setelit.
+64|Gd|Gadolinium|158|neutron|🧠|Gadoliniumin avulla sairaalan magneettikuvat näkyvät selvemmin.
+65|Tb|Terbium|159|neutron|💚|Terbium hehkuu vihreänä. Sekin on nimetty Ytterbyn kylän mukaan.
+66|Dy|Dysprosium|164|neutron|🚗|Dysprosium auttaa sähköautojen moottorien magneetteja kestämään kuumuutta.
+67|Ho|Holmium|165|neutron|🧲|Holmium on nimetty Tukholman mukaan. Sillä on alkuaineista vahvin magneettinen voima.
+68|Er|Erbium|166|neutron|🌐|Erbium vahvistaa valoa, joka kuljettaa internetiä valokaapeleissa.
+69|Tm|Tulium|169|neutron|🗺️|Yksi harvinaisimmista lantanoideista. Nimi tulee Thulesta, vanhasta nimestä kaukaiselle pohjoiselle.
+70|Yb|Ytterbium|174|neutron|⏰|Ytterbiumilla tehdään tutkimuksessa erittäin tarkkoja kelloja. Nimi tulee taas Ytterbyn kylästä!
+71|Lu|Lutetium|175|neutron|🏥|Lutetiumia käytetään sairaaloissa syövän hoidossa.
+72|Hf|Hafnium|180|small|⚛️|Hafniumia käytetään ydinvoimaloissa reaktorin säätämiseen.
+73|Ta|Tantaali|181|neutron|📱|Tantaalia on puhelimien pienissä sähköosissa.
+74|W|Volframi|184|small|💡|Volframi kestää kuumuutta paremmin kuin mikään muu metalli. Vanhojen hehkulamppujen hehkulanka oli volframia.
+75|Re|Renium|187|neutron|✈️|Yksi viimeisenä löydetyistä luonnon alkuaineista. Sitä on suihkumoottoreissa.
+76|Os|Osmium|192|neutron|🏋️|Maailman tihein alkuaine. Osmiumkuutio painaa kaksi kertaa enemmän kuin samankokoinen lyijykuutio!
+77|Ir|Iridium|193|neutron|☄️|Kun suuri asteroidi iski Maahan dinosaurusten aikaan, se toi mukanaan paljon iridiumia.
+78|Pt|Platina|195|neutron|💍|Platina on kallis, kiiltävä metalli. Siitä tehdään koruja.
+79|Au|Kulta|197|neutron|🥇|Kulta ei ruostu koskaan. Siksi kultaesineet kiiltävät vielä tuhansien vuosien jälkeenkin.
+80|Hg|Elohopea|202|small|🌡️|Elohopea on metalli, joka on huoneenlämmössä nestettä! Ennen sitä oli kuumemittareissa.
+81|Tl|Tallium|205|small|☠️|Tallium on hyvin myrkyllistä. Nimi tarkoittaa kreikaksi vihreää versoa.
+82|Pb|Lyijy|208|small|🛡️|Lyijy on raskas metalli. Hammaslääkärissä saa röntgenkuvan ajaksi lyijyliivin suojaksi.
+83|Bi|Vismutti|209|small|🌈|Vismutti muodostaa kauniita sateenkaaren värisiä porraskiteitä.
+84|Po|Polonium|209|decay|🇵🇱|Marie Curie löysi poloniumin ja nimesi sen kotimaansa Puolan mukaan.
+85|At|Astatiini|210|decay|🫧|Maapallon harvinaisin luonnon alkuaine. Koko maapallolla on sitä kerrallaan vain pieni hippu.
+86|Rn|Radon|222|decay|🏠|Radon on näkymätön kaasu, joka voi tihkua maasta talojen kellareihin. Suomessa radonia mitataan kodeista.
+87|Fr|Frankium|223|decay|⚡|Frankium on nimetty Ranskan mukaan. Se hajoaa niin nopeasti, ettei kukaan ole nähnyt sitä paljaalla silmällä.
+88|Ra|Radium|226|decay|✨|Radium hehkuu pimeässä. Marie ja Pierre Curie löysivät sen.
+89|Ac|Aktinium|227|decay|💙|Aktinium hehkuu pimeässä sinisenä. Nimi tarkoittaa sädettä.
+90|Th|Torium|232|neutron|⚡|Torium on nimetty ukkosen jumala Thorin mukaan.
+91|Pa|Protaktinium|231|decay|🔬|Harvinainen ja radioaktiivinen. Sitä syntyy, kun uraani hajoaa.
+92|U|Uraani|238|neutron|⚛️|Uraani on raskain alkuaine, jota löytyy luonnosta paljon. Ydinvoimalat tekevät sillä sähköä.
+93|Np|Neptunium|237|human|🪐|Nimetty Neptunus-planeetan mukaan, koska se tulee uraanin jälkeen, niin kuin Neptunus tulee Uranuksen jälkeen.
+94|Pu|Plutonium|244|human|🚀|Plutoniumilla on tehty sähköä avaruusluotaimille, jotka matkaavat kauas Auringosta.
+95|Am|Amerikium|243|human|🚨|Monessa palovaroittimessa on pieni hitunen amerikiumia.
+96|Cm|Curium|247|human|👩‍🔬|Nimetty Marie ja Pierre Curien kunniaksi. Mars-mönkijöissä on tutkittu kiviä curiumin avulla.
+97|Bk|Berkelium|247|human|🏫|Nimetty Berkeleyn kaupungin mukaan Yhdysvalloissa, jossa se tehtiin.
+98|Cf|Kalifornium|251|human|🌴|Nimetty Kalifornian mukaan. Sillä voidaan tutkia, mitä maan alla on.
+99|Es|Einsteinium|252|human|🧠|Nimetty kuuluisan tiedemiehen Albert Einsteinin mukaan.
+100|Fm|Fermium|257|human|🔬|Nimetty tiedemies Enrico Fermin mukaan.
+101|Md|Mendelevium|258|human|📋|Nimetty Dmitri Mendelejevin mukaan. Hän keksi alkuainetaulukon vuonna 1869.
+102|No|Nobelium|259|human|🏆|Nimetty Alfred Nobelin mukaan, joka perusti Nobelin palkinnon.
+103|Lr|Lawrencium|266|human|🌀|Nimetty Ernest Lawrencen mukaan. Hän keksi koneen, jolla atomeja voidaan kiihdyttää ja törmäyttää.
+104|Rf|Rutherfordium|267|human|🎯|Nimetty Ernest Rutherfordin mukaan. Hän keksi, että atomin keskellä on ydin.
+105|Db|Dubnium|268|human|🏛️|Nimetty Venäjän Dubnan kaupungin mukaan. Siellä on suuri atomitutkimuksen laboratorio.
+106|Sg|Seaborgium|269|human|🔬|Nimetty Glenn Seaborgin mukaan. Hän oli mukana löytämässä kymmentä alkuainetta.
+107|Bh|Bohrium|270|human|⭕|Nimetty Niels Bohrin mukaan. Hän keksi, että elektronit ovat ytimen ympärillä kerroksissa, niin kuin tämän sivun kuvissa!
+108|Hs|Hassium|269|human|🏰|Nimetty Saksan Hessenin osavaltion mukaan, jossa se tehtiin.
+109|Mt|Meitnerium|278|human|👩‍🔬|Nimetty Lise Meitnerin mukaan. Hän oli yksi tärkeimmistä atomien tutkijoista.
+110|Ds|Darmstadtium|281|human|🏙️|Nimetty Saksan Darmstadtin kaupungin mukaan.
+111|Rg|Röntgenium|282|human|🩻|Nimetty Wilhelm Röntgenin mukaan. Hän keksi röntgensäteet.
+112|Cn|Kopernikium|285|human|🌍|Nimetty Nikolaus Kopernikuksen mukaan. Hän keksi, että Maa kiertää Aurinkoa.
+113|Nh|Nihonium|286|human|🗾|Ensimmäinen Aasiassa löydetty alkuaine. Nihon tarkoittaa japaniksi Japania.
+114|Fl|Flerovium|289|human|🔬|Nimetty venäläisen tutkijan Georgi Fljorovin mukaan.
+115|Mc|Moskovium|290|human|🏙️|Nimetty Moskovan alueen mukaan Venäjällä.
+116|Lv|Livermorium|293|human|🔬|Nimetty Livermoren kaupungin mukaan Yhdysvalloissa.
+117|Ts|Tennessiini|294|human|🎸|Nimetty Tennesseen osavaltion mukaan Yhdysvalloissa. Yksi viimeisimpinä löydetyistä alkuaineista.
+118|Og|Oganesson|294|human|🏁|Taulukon viimeinen ja raskain alkuaine. Sitä on tehty koko maailmassa vain muutama atomi.
+`;
+const ELEMENTS = RAW.trim().split('\n').map(l => {
+  const [z,s,n,a,o,e,f] = l.split('|');
+  return {z:+z, s, n, a:+a, o, e, f};
+});
+
+const CATS = {
+  alkali:    {name:'Alkalimetalli',    color:'var(--alkali)',    info:'Pehmeitä metalleja, jotka reagoivat veden kanssa rajusti.'},
+  alkaline:  {name:'Maa-alkalimetalli',color:'var(--alkaline)',  info:'Metalleja, joita on paljon kivissä ja luissa.'},
+  transition:{name:'Siirtymämetalli',  color:'var(--transition)',info:'Tavallisia, kovia ja kiiltäviä metalleja, kuten rauta ja kulta.'},
+  post:      {name:'Muu metalli',      color:'var(--post)',      info:'Pehmeähköjä metalleja, kuten alumiini ja tina.'},
+  metalloid: {name:'Puolimetalli',     color:'var(--metalloid)', info:'Vähän kuin metalli, vähän kuin ei.'},
+  nonmetal:  {name:'Epämetalli',       color:'var(--nonmetal)',  info:'Eivät ole metalleja. Moni on kaasu, kuten happi.'},
+  halogen:   {name:'Halogeeni',        color:'var(--halogen)',   info:'Hyvin reagoivia aineita, kuten kloori.'},
+  noble:     {name:'Jalokaasu',        color:'var(--noble)',     info:'Kaasuja, jotka eivät halua yhdistyä mihinkään.'},
+  lanth:     {name:'Lantanoidi',       color:'var(--lanth)',     info:'Harvinaisia metalleja, joita on magneeteissa ja näytöissä.'},
+  actin:     {name:'Aktinoidi',        color:'var(--actin)',     info:'Raskaita, radioaktiivisia metalleja.'},
+  unknown:   {name:'Tuntematon',       color:'var(--unknown)',   info:'Niin harvinaisia, ettei tutkijat vielä tiedä niistä paljoa.'}
+};
+const CAT_LIST = {
+  alkali:[3,11,19,37,55,87], alkaline:[4,12,20,38,56,88], noble:[2,10,18,36,54,86],
+  halogen:[9,17,35,53,85], nonmetal:[1,6,7,8,15,16,34], metalloid:[5,14,32,33,51,52],
+  post:[13,31,49,50,81,82,83,84]
+};
+function catOf(z){
+  if(z>=57&&z<=71) return 'lanth';
+  if(z>=89&&z<=103) return 'actin';
+  if(z>=109) return 'unknown';
+  for(const k in CAT_LIST) if(CAT_LIST[k].includes(z)) return k;
+  return 'transition';
+}
+const ORIGINS = {
+  bb:     {name:'Alkuräjähdys', em:'💥', color:'var(--o-bb)',
+           text:'Syntyi heti maailmankaikkeuden alussa, alkuräjähdyksessä, noin 14 miljardia vuotta sitten.'},
+  cosmic: {name:'Kosmiset säteet', em:'⚡', color:'var(--o-cosmic)',
+           text:'Syntyi avaruudessa, kun salamannopeat hiukkaset törmäsivät isompiin atomeihin ja lohkaisivat niistä palasia.'},
+  small:  {name:'Pienet tähdet', em:'⭐', color:'var(--o-small)',
+           text:'Syntyi Aurinkomme kaltaisten tähtien sisällä. Kun tähti vanhenee, se puhaltaa uudet atomit avaruuteen.'},
+  big:    {name:'Isot tähdet ja supernovat', em:'🌟', color:'var(--o-big)',
+           text:'Syntyi jättiläistähden sisällä tai silloin, kun tähti räjähti valtavana supernovana.'},
+  neutron:{name:'Neutronitähtien törmäys', em:'💫', color:'var(--o-neutron)',
+           text:'Syntyi, kun kaksi neutronitähteä törmäsi. Neutronitähti on pieni mutta hirveän raskas kuollut tähti.'},
+  decay:  {name:'Hajoaminen', em:'⏳', color:'var(--o-decay)',
+           text:'Syntyy maapallolla koko ajan, kun uraani ja torium hajoavat pikkuhiljaa toisiksi alkuaineiksi.'},
+  human:  {name:'Laboratorio', em:'🔬', color:'var(--o-human)',
+           text:'Ihmiset ovat tehneet tämän laboratoriossa törmäyttämällä atomeja. Se hajoaa itsestään toisiksi alkuaineiksi.'}
+};
+const GAS = [1,2,7,8,9,10,17,18,36,54,86], LIQUID = [35,80];
+function stateOf(z){
+  if(z>=100) return '❓ Ei tiedetä varmasti – sitä on tehty niin vähän, ettei kukaan ole päässyt katsomaan.';
+  if(GAS.includes(z)) return '💨 Kaasu – niin kuin ilma.';
+  if(LIQUID.includes(z)) return '💧 Neste – niin kuin vesi.';
+  return '🪨 Kiinteä – niin kuin kivi.';
+}
+
+/* ----- Elektronikuoret ----- */
+const ORDER = ['1s','2s','2p','3s','3p','4s','3d','4p','5s','4d','5p','6s','4f','5d','6p','7s','5f','6d','7p'];
+const CAP = {s:2,p:6,d:10,f:14};
+const EXC = {24:{'4s':-1,'3d':1},29:{'4s':-1,'3d':1},41:{'5s':-1,'4d':1},42:{'5s':-1,'4d':1},
+  44:{'5s':-1,'4d':1},45:{'5s':-1,'4d':1},46:{'5s':-2,'4d':2},47:{'5s':-1,'4d':1},
+  57:{'4f':-1,'5d':1},58:{'4f':-1,'5d':1},64:{'4f':-1,'5d':1},78:{'6s':-1,'5d':1},79:{'6s':-1,'5d':1},
+  89:{'5f':-1,'6d':1},90:{'5f':-2,'6d':2},91:{'5f':-1,'6d':1},92:{'5f':-1,'6d':1},93:{'5f':-1,'6d':1},
+  96:{'5f':-1,'6d':1},103:{'6d':-1,'7p':1}};
+function shellsOf(z){
+  let left = z; const occ = {};
+  for(const o of ORDER){ if(left<=0) break; const c = Math.min(CAP[o[1]], left); occ[o]=c; left-=c; }
+  const ex = EXC[z]; if(ex) for(const k in ex) occ[k]=(occ[k]||0)+ex[k];
+  const sh = [0,0,0,0,0,0,0];
+  for(const k in occ) sh[+k[0]-1] += occ[k];
+  while(sh.length && sh[sh.length-1]===0) sh.pop();
+  return sh;
+}
+
+/* ----- Piirtäminen ----- */
+function rng(seed){ return () => (seed = (seed*16807) % 2147483647) / 2147483647; }
+function nucleusSVG(p, n, cx, cy, maxR, dotMax=7.5){
+  const total = p+n;
+  const golden = Math.PI*(3-Math.sqrt(5));
+  const dotR = Math.min(dotMax, maxR/(Math.sqrt(total)*1.05 + 0.6));
+  const step = dotR*1.9;
+  const rand = rng(p*131 + n*7 + 3);
+  const types = Array(p).fill('p').concat(Array(n).fill('n'));
+  for(let i=types.length-1;i>0;i--){ const j=Math.floor(rand()*(i+1)); [types[i],types[j]]=[types[j],types[i]]; }
+  let out = '';
+  for(let i=total-1;i>=0;i--){
+    const r = (maxR-dotR)*Math.sqrt((i+0.5)/total)*0.92, a = i*golden;
+    const x = cx + r*Math.cos(a), y = cy + r*Math.sin(a);
+    const col = types[i]==='p' ? '#ff5d5d' : '#9aa6c9';
+    const st = types[i]==='p' ? '#c93b3b' : '#6f7aa1';
+    out += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${dotR.toFixed(2)}" fill="${col}" stroke="${st}" stroke-width="${Math.max(.3,dotR*.15).toFixed(2)}"/>`;
+  }
+  return out;
+}
+function atomSVG(z, a, opts={}){
+  const p = z, n = Math.max(0, a - z);
+  const sh = shellsOf(z);
+  const nucR = Math.min(46, 9 + Math.sqrt(p+n)*2.4);
+  const inner = nucR + 16, outer = 140;
+  const gapR = sh.length>1 ? (outer-inner)/(sh.length-1) : 0;
+  let s = `<svg viewBox="0 0 300 300" role="img" aria-label="${opts.label||'Atomi'}">`;
+  s += `<defs><radialGradient id="glow${opts.id||''}"><stop offset="0" stop-color="#fff2b3" stop-opacity=".9"/><stop offset="1" stop-color="#fff2b3" stop-opacity="0"/></radialGradient></defs>`;
+  s += `<circle cx="150" cy="150" r="${nucR+10}" fill="url(#glow${opts.id||''})"/>`;
+  sh.forEach((count,i)=>{
+    const r = sh.length>1 ? inner + gapR*i : Math.max(inner, 70);
+    s += `<circle cx="150" cy="150" r="${r.toFixed(1)}" fill="none" stroke="${opts.dark?'#ffffff44':'#c7cde8'}" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+  });
+  s += nucleusSVG(p, n, 150, 150, nucR);
+  sh.forEach((count,i)=>{
+    const r = sh.length>1 ? inner + gapR*i : Math.max(inner, 70);
+    const eR = count>18 ? 3.2 : 4.6;
+    const dur = (6 + i*3.5) * (i%2 ? -1 : 1);
+    s += `<g class="orbit" style="animation-duration:${Math.abs(dur)}s;animation-direction:${dur<0?'reverse':'normal'}">`;
+    for(let k=0;k<count;k++){
+      const ang = (k/count)*Math.PI*2 + i*0.6;
+      const x = 150 + r*Math.cos(ang), y = 150 + r*Math.sin(ang);
+      s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${eR}" fill="#3ec7ff" stroke="#0b86b8" stroke-width="1"/>`;
+    }
+    s += `</g>`;
+  });
+  return s + '</svg>';
+}
+
+/* ----- Taulukon paikat ----- */
+function posOf(z){
+  if(z===1) return [1,1]; if(z===2) return [1,18];
+  if(z<=4) return [2,z-2]; if(z<=10) return [2,z+8];
+  if(z<=12) return [3,z-10]; if(z<=18) return [3,z];
+  if(z<=36) return [4,z-18]; if(z<=54) return [5,z-36];
+  if(z<=56) return [6,z-54]; if(z<=71) return [9,z-54]; if(z<=86) return [6,z-68];
+  if(z<=88) return [7,z-86]; if(z<=103) return [10,z-86]; return [7,z-100];
+}
+
+/* ================= TAULUKKO ================= */
+let mode = 'group', filter = null;
+const table = document.getElementById('ptable');
+function buildTable(){
+  table.innerHTML = '';
+  const cells = [];
+  ELEMENTS.forEach(e=>{
+    const [r,c] = posOf(e.z);
+    const b = document.createElement('button');
+    b.className = 'el'; b.dataset.z = e.z;
+    b.style.gridRow = r; b.style.gridColumn = c;
+    b.innerHTML = `<span class="n">${e.z}</span><span class="s">${e.s}</span><span class="nm">${e.n}</span>`;
+    b.setAttribute('aria-label', `${e.n}, numero ${e.z}`);
+    b.addEventListener('click', ()=>openModal(e.z));
+    cells.push(b);
+  });
+  const ph = (r,c,t)=>{ const d=document.createElement('div'); d.className='el placeholder'; d.style.gridRow=r; d.style.gridColumn=c; d.textContent=t; return d; };
+  const gap = document.createElement('div'); gap.className='gap'; gap.style.gridRow=8;
+  [ph(6,3,'57–71'), ph(7,3,'89–103'), gap, ...cells].forEach(x=>table.appendChild(x));
+  paint();
+}
+function paint(){
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  table.querySelectorAll('.el[data-z]').forEach(b=>{
+    const e = ELEMENTS[b.dataset.z-1];
+    const key = mode==='group' ? catOf(e.z) : e.o;
+    b.style.background = mode==='group' ? CATS[key].color : ORIGINS[key].color;
+    const matchFilter = !filter || filter===key;
+    const matchQ = !q || e.n.toLowerCase().includes(q) || e.s.toLowerCase()===q || String(e.z)===q;
+    b.classList.toggle('dim', !(matchFilter && matchQ));
+  });
+  buildLegend();
+}
+function buildLegend(){
+  const lg = document.getElementById('legend'); lg.innerHTML='';
+  const src = mode==='group' ? CATS : ORIGINS;
+  for(const k in src){
+    const c = document.createElement('button');
+    c.className='chip'; c.style.background = src[k].color;
+    c.setAttribute('aria-pressed', filter===k);
+    c.title = mode==='group' ? src[k].info : src[k].text;
+    c.textContent = (mode==='origin' ? src[k].em+' ' : '') + src[k].name;
+    c.addEventListener('click', ()=>{ filter = filter===k ? null : k; paint(); });
+    lg.appendChild(c);
+  }
+  if(mode==='origin'){
+    const note = document.createElement('p'); note.className='hint'; note.style.width='100%'; note.style.margin='6px 0 0';
+    note.textContent = 'Moni alkuaine on syntynyt monella tavalla. Taulukossa näkyy tärkein tapa.';
+    lg.appendChild(note);
+  }
+}
+function setMode(m){
+  mode = m; filter = null;
+  document.getElementById('modeGroup').setAttribute('aria-pressed', m==='group');
+  document.getElementById('modeOrigin').setAttribute('aria-pressed', m==='origin');
+  paint();
+}
+document.getElementById('modeGroup').onclick = ()=>setMode('group');
+document.getElementById('modeOrigin').onclick = ()=>setMode('origin');
+document.getElementById('search').addEventListener('input', paint);
+
+/* ================= MODAL ================= */
+const bg = document.getElementById('modalBg');
+let current = 1, lastFocus = null;
+function openModal(z){
+  current = z;
+  const e = ELEMENTS[z-1], cat = CATS[catOf(z)], org = ORIGINS[e.o];
+  document.getElementById('mTop').style.background = cat.color;
+  document.getElementById('mNum').textContent = e.z;
+  document.getElementById('mSym').textContent = e.s;
+  document.getElementById('mName').textContent = `${e.e} ${e.n}`;
+  document.getElementById('mCat').textContent = `${cat.name} – ${cat.info}`;
+  document.getElementById('mAtom').innerHTML = atomSVG(e.z, e.a, {id:'m', label:`${e.n}-atomin kuva`});
+  document.getElementById('mP').textContent = e.z;
+  document.getElementById('mN').textContent = e.a - e.z;
+  document.getElementById('mE').textContent = e.z;
+  const sh = shellsOf(e.z);
+  document.getElementById('mShells').textContent =
+    `${sh.length} kuorta. Sisimmästä ulospäin: ${sh.join(', ')} elektronia.`;
+  document.getElementById('mFact').textContent = e.f;
+  document.getElementById('mState').textContent = stateOf(e.z);
+  document.getElementById('mOrigin').innerHTML = `<b>${org.em} ${org.name}.</b> ${org.text}`;
+  document.getElementById('mPrev').disabled = z===1;
+  document.getElementById('mNext').disabled = z===118;
+  if(!bg.classList.contains('open')){ lastFocus = document.activeElement; bg.classList.add('open'); document.body.style.overflow='hidden'; }
+  document.getElementById('mClose').focus();
+}
+function closeModal(){ bg.classList.remove('open'); document.body.style.overflow=''; if(lastFocus) lastFocus.focus(); }
+document.getElementById('mClose').onclick = closeModal;
+bg.addEventListener('click', ev=>{ if(ev.target===bg) closeModal(); });
+document.getElementById('mPrev').onclick = ()=>current>1 && openModal(current-1);
+document.getElementById('mNext').onclick = ()=>current<118 && openModal(current+1);
+document.addEventListener('keydown', ev=>{
+  if(!bg.classList.contains('open')) return;
+  if(ev.key==='Escape') closeModal();
+  if(ev.key==='ArrowRight' && current<118) openModal(current+1);
+  if(ev.key==='ArrowLeft' && current>1) openModal(current-1);
+});
+
+/* ================= TARINA ================= */
+const STORY = [
+  {em:'💥', bg:'#ffe2b8', t:'Alkuräjähdys', p:'Noin 14 miljardia vuotta sitten maailmankaikkeus syntyi alkuräjähdyksessä. Silloin syntyi melkein pelkkää vetyä ja heliumia. Ne ovat kaikkein kevyimmät alkuaineet.'},
+  {em:'⭐', bg:'#fff3b0', t:'Tähdet ovat alkuainetehtaita', p:'Painovoima veti vetyä yhteen valtaviksi palloiksi. Niistä tuli tähtiä. Tähden sisällä ytimet törmäävät ja tarttuvat yhteen, ja niin syntyy uusia, raskaampia alkuaineita.'},
+  {em:'🌟', bg:'#ffd0c2', t:'Jättiläistähdet ja supernovat', p:'Suurimmat tähdet tekevät hiiltä, happea, piitä ja lopulta rautaa. Kun jättiläistähti kuolee, se räjähtää supernovana ja sinkoaa alkuaineet avaruuteen.'},
+  {em:'💫', bg:'#e6d8ff', t:'Neutronitähtien törmäys', p:'Kulta, platina ja uraani tarvitsevat vielä rajumman paikan. Niitä syntyy, kun kaksi neutronitähteä törmää toisiinsa.'},
+  {em:'🌍', bg:'#cdeeff', t:'Sinä olet tähtipölyä', p:'Avaruuteen lentäneistä alkuaineista syntyi uusia tähtiä, planeettoja ja myös Maa. Kehosi hiili, veresi rauta ja hampaidesi kalsium syntyivät tähdissä kauan ennen kuin Maata oli olemassa!'},
+  {em:'🔬', bg:'#e3e7f2', t:'Ihmisen tekemät alkuaineet', p:'Tutkijat ovat tehneet laboratorioissa uusia alkuaineita törmäyttämällä atomeja hurjalla vauhdilla. Ne ovat taulukon lopussa, ja ne hajoavat nopeasti.'}
+];
+document.getElementById('story').innerHTML = STORY.map((s,i)=>
+  `<div class="step" style="background:${s.bg}"><span class="no">${i+1}</span><div class="em">${s.em}</div><h3>${s.t}</h3><p style="margin:0">${s.p}</p></div>`).join('');
+
+/* ================= FUUSIO ================= */
+const FUSIONS = [
+  {inp:[[1,0],[1,0],[1,0],[1,0]], out:[2,2], from:'4 × vety', to:'helium',
+   before:'Tässä on neljä vedyn ydintä. Jokaisessa on vain yksi protoni. Paina nappia!',
+   after:'Pum! Neljästä vedystä tuli yksi heliumin ydin. Samalla vapautui valoa ja lämpöä – siksi Aurinko paistaa! ☀️'},
+  {inp:[[2,2],[2,2],[2,2]], out:[6,6], from:'3 × helium', to:'hiili',
+   before:'Nyt on kolme heliumin ydintä. Mitä niistä tulee, kun ne yhdistyvät?',
+   after:'Kolmesta heliumista tuli hiiltä! Juuri siitä aineesta sinä ja kaikki elävä on tehty. 🌱'},
+  {inp:[[6,6],[2,2]], out:[8,8], from:'hiili + helium', to:'happi',
+   before:'Hiili ja helium kohtaavat tähden kuumassa sisällä...',
+   after:'Syntyi happea – sitä, mitä hengität juuri nyt! 🫁'},
+  {inp:[[8,8],[8,8]], out:[16,16], from:'2 × happi', to:'rikki',
+   before:'Jättiläistähdessä on niin kuuma, että jopa kaksi hapen ydintä voi yhdistyä.',
+   after:'Kahdesta hapesta tuli rikkiä! Mitä raskaampi alkuaine, sitä kuumempaa tarvitaan. 🌋'}
+];
+let fIdx = 0, fused = false;
+const fsvg = document.getElementById('fusionSvg');
+const NAMES = {1:'Vety',2:'Helium',6:'Hiili',8:'Happi',16:'Rikki'};
+function nucGroup(p,n,x,y,r,label,cls=''){
+  return `<g class="nuc ${cls}" style="transform:translate(${x}px,${y}px)">
+    ${nucleusSVG(p,n,0,0,r,15)}
+    <text x="0" y="${r+22}" text-anchor="middle" fill="#fff" font-size="16" font-weight="800">${label}</text></g>`;
+}
+function drawFusion(){
+  fused = false;
+  const f = FUSIONS[fIdx], k = f.inp.length;
+  let s = `<circle id="flashC" cx="260" cy="120" r="0" fill="#fff6c2" opacity="0"/>`;
+  f.inp.forEach(([p,n],i)=>{
+    const x = 70 + i*(380/(k-1)), y = 110 + (i%2? 20 : -20);
+    s += nucGroup(p,n,x,y, 14+Math.sqrt(p+n)*7, NAMES[p], 'in');
+  });
+  s += `<g id="outG" style="opacity:0;transition:opacity .5s">${nucGroup(f.out[0],f.out[1],260,115, 16+Math.sqrt(f.out[0]+f.out[1])*8, NAMES[f.out[0]])}</g>`;
+  fsvg.innerHTML = s;
+  document.getElementById('fusionText').textContent = f.before;
+  document.getElementById('fuseBtn').disabled = false;
+}
+document.getElementById('fuseBtn').onclick = ()=>{
+  if(fused) return; fused = true;
+  document.getElementById('fuseBtn').disabled = true;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  fsvg.querySelectorAll('.nuc.in').forEach(g=>{ g.style.transform='translate(260px,115px)'; });
+  setTimeout(()=>{
+    const fl = document.getElementById('flashC');
+    fl.setAttribute('r','110'); fl.style.transition='none'; fl.style.opacity=reduce?0:.9;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ fl.style.transition='opacity .9s'; fl.style.opacity=0; }));
+    fsvg.querySelectorAll('.nuc.in').forEach(g=>g.style.opacity=0);
+    document.getElementById('outG').style.opacity=1;
+    document.getElementById('fusionText').textContent = FUSIONS[fIdx].after;
+  }, reduce ? 50 : 1300);
+};
+document.getElementById('nextFuse').onclick = ()=>{ fIdx = (fIdx+1)%FUSIONS.length; drawFusion(); };
+
+/* ================= RAKENNA ================= */
+let bz = 1;
+function drawBuilder(){
+  const e = ELEMENTS[bz-1];
+  document.getElementById('bP').textContent = bz;
+  document.getElementById('bName').textContent = `${e.e} ${e.n} (${e.s})`;
+  document.getElementById('bFact').textContent = e.f;
+  document.getElementById('bRange').value = bz;
+  document.getElementById('builderAtom').innerHTML = atomSVG(e.z, e.a, {id:'b', label:`${e.n}-atomin kuva`});
+  document.getElementById('bMinus').disabled = bz===1;
+  document.getElementById('bPlus').disabled = bz===118;
+}
+document.getElementById('bMinus').onclick = ()=>{ if(bz>1){bz--;drawBuilder();} };
+document.getElementById('bPlus').onclick = ()=>{ if(bz<118){bz++;drawBuilder();} };
+document.getElementById('bRange').oninput = ev=>{ bz=+ev.target.value; drawBuilder(); };
+document.getElementById('bOpen').onclick = ()=>openModal(bz);
+
+/* ================= KÄYNNISTYS ================= */
+document.getElementById('heroAtom').innerHTML = atomSVG(2,4,{id:'h',dark:true,label:'Heliumatomi'});
+document.getElementById('introAtom').innerHTML = atomSVG(6,12,{id:'i',label:'Hiiliatomi'});
+buildTable(); drawFusion(); drawBuilder();
+</script>
+</body>
+</html>
